@@ -6,17 +6,17 @@
   <title>Aqua | Инвесторская презентация</title>
   <style>
     :root {
-      --ink: #102330;
-      --muted: #5f7180;
-      --blue: #0e8fbd;
-      --blue-deep: #075f83;
-      --cyan: #71d0e5;
-      --leaf: #4c9a58;
-      --earth: #87634b;
-      --sand: #f3efe6;
-      --paper: #fbfcfb;
-      --line: rgba(16, 35, 48, .14);
-      --shadow: 0 22px 70px rgba(14, 95, 131, .16);
+      --ink: #0c2733;
+      --muted: #5d7480;
+      --blue: #0788bd;
+      --blue-deep: #045a7a;
+      --cyan: #67d7ef;
+      --aqua: #dff8fb;
+      --leaf: #48a868;
+      --earth: #8b6a4e;
+      --paper: rgba(255, 255, 255, .86);
+      --line: rgba(7, 88, 120, .16);
+      --shadow: 0 18px 54px rgba(4, 90, 122, .18);
     }
 
     * {
@@ -32,98 +32,132 @@
       color: var(--ink);
       font-family: Inter, "Segoe UI", Arial, sans-serif;
       background:
-        radial-gradient(circle at top left, rgba(113, 208, 229, .24), transparent 34rem),
-        linear-gradient(135deg, #f9fcfd 0%, #eef8f7 52%, #f8f5ec 100%);
+        radial-gradient(circle at 12% 8%, rgba(103, 215, 239, .34), transparent 28rem),
+        radial-gradient(circle at 86% 12%, rgba(72, 168, 104, .16), transparent 24rem),
+        linear-gradient(140deg, #f7fcff 0%, #e8f8fb 46%, #f7fbf8 100%);
     }
 
     img {
-      max-width: 100%;
       display: block;
+      max-width: 100%;
     }
 
     .deck {
-      height: 100vh;
+      height: 100dvh;
       overflow-y: auto;
       scroll-snap-type: y mandatory;
     }
 
     .slide {
-      min-height: 100vh;
+      height: 100dvh;
       scroll-snap-align: start;
       display: grid;
       place-items: center;
-      padding: clamp(20px, 4vw, 56px);
+      padding: clamp(10px, 2vw, 24px);
       position: relative;
       overflow: hidden;
     }
 
-    .slide::before {
+    .slide::before,
+    .slide::after {
       content: "";
       position: absolute;
+      pointer-events: none;
+    }
+
+    .slide::before {
       inset: 0;
       background-image:
-        linear-gradient(rgba(14, 143, 189, .075) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(14, 143, 189, .055) 1px, transparent 1px);
-      background-size: 44px 44px;
-      mask-image: linear-gradient(to bottom, transparent, #000 18%, #000 72%, transparent);
-      pointer-events: none;
+        linear-gradient(rgba(7, 136, 189, .06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(7, 136, 189, .05) 1px, transparent 1px);
+      background-size: 38px 38px;
+      mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 82%, transparent);
+    }
+
+    .slide::after {
+      left: -8vw;
+      right: -8vw;
+      bottom: -13vh;
+      height: 28vh;
+      background:
+        radial-gradient(70% 80% at 50% 0%, rgba(103, 215, 239, .42), transparent 68%),
+        repeating-radial-gradient(ellipse at 50% 0%, rgba(7, 136, 189, .16) 0 2px, transparent 2px 18px);
+      border-radius: 50% 50% 0 0;
     }
 
     .canvas {
       width: min(1180px, 100%);
-      min-height: min(720px, calc(100vh - 56px));
+      height: calc(100dvh - clamp(20px, 4vw, 48px));
       display: grid;
-      grid-template-rows: auto 1fr auto;
-      gap: clamp(18px, 3vw, 34px);
-      background: rgba(255, 255, 255, .78);
-      border: 1px solid rgba(255, 255, 255, .88);
+      grid-template-rows: auto minmax(0, 1fr) auto;
+      gap: clamp(10px, 1.6vw, 20px);
+      padding: clamp(14px, 2.4vw, 28px);
+      border: 1px solid rgba(255, 255, 255, .92);
       border-radius: 8px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .9), rgba(255, 255, 255, .72)),
+        radial-gradient(circle at 80% 0%, rgba(103, 215, 239, .22), transparent 22rem);
       box-shadow: var(--shadow);
-      backdrop-filter: blur(16px);
-      padding: clamp(18px, 3.4vw, 44px);
+      backdrop-filter: blur(18px);
       position: relative;
       z-index: 1;
+      overflow: hidden;
+    }
+
+    .canvas::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 10px;
+      background: linear-gradient(90deg, var(--blue-deep), var(--cyan), var(--leaf));
+      opacity: .78;
     }
 
     header,
     footer,
     .brand,
     .slide-nav,
-    .metric-row,
+    .grid,
     .cards,
     .steps,
+    .charts,
     .timeline,
-    .split,
     .impact-grid,
-    .ask-grid {
+    .ask-grid,
+    .budget-grid {
       display: grid;
-      gap: 16px;
+      gap: clamp(10px, 1.4vw, 16px);
     }
 
     header {
       grid-template-columns: auto 1fr auto;
       align-items: center;
+      min-height: 44px;
+      position: relative;
+      z-index: 2;
     }
 
     .brand {
-      grid-template-columns: 44px auto;
+      grid-template-columns: 40px auto;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       min-width: 0;
     }
 
     .brand img {
-      width: 44px;
-      height: 44px;
+      width: 40px;
+      height: 40px;
       object-fit: cover;
-      border-radius: 8px;
       border: 1px solid var(--line);
+      border-radius: 8px;
     }
 
     .brand strong {
       display: block;
-      font-size: 15px;
-      letter-spacing: .08em;
+      font-size: 14px;
+      letter-spacing: .09em;
       text-transform: uppercase;
     }
 
@@ -131,25 +165,27 @@
     .kicker,
     footer,
     .note,
-    .eyebrow {
+    .mini {
       color: var(--muted);
     }
 
-    .brand span {
-      font-size: 13px;
+    .brand span,
+    footer,
+    .mini {
+      font-size: 12px;
     }
 
     .stage {
       justify-self: center;
+      padding: 7px 11px;
+      border: 1px solid rgba(7, 136, 189, .22);
+      border-radius: 999px;
+      background: rgba(103, 215, 239, .13);
       color: var(--blue-deep);
-      font-weight: 750;
-      font-size: 12px;
+      font-size: 11px;
+      font-weight: 800;
       letter-spacing: .12em;
       text-transform: uppercase;
-      padding: 8px 12px;
-      border: 1px solid rgba(14, 143, 189, .22);
-      border-radius: 999px;
-      background: rgba(113, 208, 229, .12);
       white-space: nowrap;
     }
 
@@ -159,25 +195,23 @@
     }
 
     .nav-btn {
-      width: 38px;
-      height: 38px;
+      width: 34px;
+      height: 34px;
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: #fff;
-      color: var(--ink);
+      background: white;
+      color: var(--blue-deep);
       font-size: 18px;
       cursor: pointer;
     }
 
     main {
-      align-self: center;
-      min-width: 0;
-    }
-
-    .hero {
-      grid-template-columns: minmax(0, 1.04fr) minmax(280px, .78fr);
-      align-items: center;
-      gap: clamp(22px, 5vw, 64px);
+      min-height: 0;
+      align-self: stretch;
+      display: grid;
+      align-content: center;
+      position: relative;
+      z-index: 1;
     }
 
     h1,
@@ -188,83 +222,92 @@
     }
 
     h1 {
-      font-size: clamp(46px, 8vw, 96px);
-      line-height: .95;
-      max-width: 9ch;
+      font-size: clamp(46px, 7.3vw, 88px);
+      line-height: .92;
       letter-spacing: 0;
     }
 
     h2 {
-      font-size: clamp(30px, 5.2vw, 64px);
+      max-width: 14ch;
+      font-size: clamp(28px, 4.4vw, 54px);
       line-height: 1;
-      max-width: 13ch;
       letter-spacing: 0;
     }
 
     h3 {
-      font-size: clamp(18px, 2vw, 24px);
-      line-height: 1.18;
+      font-size: clamp(16px, 1.65vw, 22px);
+      line-height: 1.14;
     }
 
     p,
     li {
-      font-size: clamp(16px, 1.55vw, 21px);
-      line-height: 1.45;
+      font-size: clamp(14px, 1.25vw, 18px);
+      line-height: 1.34;
     }
 
     ul {
       margin: 0;
-      padding-left: 22px;
+      padding-left: 18px;
     }
 
     li + li {
-      margin-top: 9px;
+      margin-top: 6px;
     }
 
     .kicker {
-      font-size: 14px;
-      font-weight: 800;
+      margin-bottom: 10px;
+      font-size: 12px;
+      font-weight: 850;
       letter-spacing: .16em;
       text-transform: uppercase;
-      margin-bottom: 14px;
     }
 
     .lead {
-      max-width: 720px;
-      font-size: clamp(20px, 2.1vw, 30px);
-      line-height: 1.28;
-      color: #27404d;
-      margin-top: 22px;
+      max-width: 710px;
+      margin-top: 16px;
+      color: #27434f;
+      font-size: clamp(18px, 1.9vw, 27px);
+      line-height: 1.23;
+    }
+
+    .grid {
+      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      align-items: center;
+    }
+
+    .hero {
+      grid-template-columns: minmax(0, 1fr) minmax(270px, .72fr);
     }
 
     .logo-hero {
-      position: relative;
+      justify-self: center;
+      width: min(360px, 34vw);
       aspect-ratio: 1;
       display: grid;
       place-items: center;
+      position: relative;
     }
 
     .logo-hero::before {
       content: "";
       position: absolute;
-      inset: 8%;
+      inset: 5%;
       border-radius: 50%;
-      background:
-        conic-gradient(from 210deg, rgba(76, 154, 88, .28), rgba(113, 208, 229, .42), rgba(135, 99, 75, .2), rgba(76, 154, 88, .28));
+      background: conic-gradient(from 210deg, rgba(103, 215, 239, .56), rgba(72, 168, 104, .24), rgba(4, 90, 122, .36), rgba(103, 215, 239, .56));
       filter: blur(18px);
-      opacity: .75;
     }
 
     .logo-hero img {
-      width: min(440px, 82vw);
-      border-radius: 8px;
       position: relative;
-      filter: drop-shadow(0 26px 36px rgba(16, 35, 48, .15));
+      border-radius: 8px;
+      filter: drop-shadow(0 22px 26px rgba(12, 39, 51, .16));
     }
 
     .metric-row {
+      display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: 30px;
+      gap: 12px;
+      margin-top: 18px;
     }
 
     .metric,
@@ -272,18 +315,38 @@
     .step,
     .timeline-item,
     .impact,
-    .ask {
+    .ask,
+    .chart-card,
+    .budget-card {
       border: 1px solid var(--line);
       border-radius: 8px;
-      background: rgba(255, 255, 255, .72);
-      padding: clamp(16px, 2vw, 24px);
+      background: var(--paper);
+      padding: clamp(12px, 1.6vw, 19px);
+    }
+
+    .metric {
+      min-height: 122px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .metric::after,
+    .card::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 5px;
+      background: linear-gradient(90deg, var(--blue), var(--cyan));
+      opacity: .7;
     }
 
     .metric strong {
       display: block;
       color: var(--blue-deep);
-      font-size: clamp(34px, 5vw, 56px);
-      line-height: 1;
+      font-size: clamp(32px, 4.4vw, 48px);
+      line-height: .95;
     }
 
     .metric span,
@@ -291,60 +354,153 @@
     .step span,
     .timeline-item span,
     .impact span,
-    .ask span {
+    .ask span,
+    .chart-card span,
+    .budget-card span {
       color: var(--muted);
-      font-size: 14px;
-      line-height: 1.35;
+      font-size: 12px;
+      line-height: 1.28;
     }
 
     .cards {
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      margin-top: 26px;
     }
 
     .card {
+      min-height: 136px;
       display: grid;
-      gap: 12px;
-      min-height: 168px;
+      gap: 9px;
+      position: relative;
+      overflow: hidden;
     }
 
     .icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 8px;
+      width: 36px;
+      height: 36px;
       display: grid;
       place-items: center;
+      border-radius: 8px;
       color: white;
-      background: linear-gradient(135deg, var(--blue), var(--leaf));
+      background: linear-gradient(135deg, var(--blue-deep), var(--cyan));
+      font-size: 15px;
       font-weight: 900;
-      font-size: 20px;
-    }
-
-    .split {
-      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
-      align-items: start;
-      gap: clamp(24px, 4vw, 52px);
     }
 
     .steps {
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      margin-top: 28px;
+      margin-top: 18px;
     }
 
     .step {
-      min-height: 210px;
-      position: relative;
+      min-height: 174px;
+      display: grid;
+      align-content: start;
+      gap: 10px;
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, .88), rgba(223, 248, 251, .58));
     }
 
     .step b {
-      display: inline-grid;
+      width: 30px;
+      height: 30px;
+      display: grid;
       place-items: center;
-      width: 34px;
-      height: 34px;
       border-radius: 50%;
       color: white;
       background: var(--blue-deep);
-      margin-bottom: 18px;
+    }
+
+    .charts {
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      align-items: stretch;
+      margin-top: 16px;
+    }
+
+    .chart-card {
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      min-height: 190px;
+    }
+
+    .bar-chart {
+      display: grid;
+      gap: 9px;
+    }
+
+    .bar-row {
+      display: grid;
+      grid-template-columns: 96px 1fr 42px;
+      align-items: center;
+      gap: 10px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    .bar {
+      height: 13px;
+      border-radius: 999px;
+      background: rgba(7, 136, 189, .12);
+      overflow: hidden;
+    }
+
+    .bar i {
+      display: block;
+      width: var(--w);
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--blue-deep), var(--cyan));
+    }
+
+    .donut-wrap {
+      display: grid;
+      grid-template-columns: 132px 1fr;
+      gap: 16px;
+      align-items: center;
+    }
+
+    .donut {
+      width: 132px;
+      aspect-ratio: 1;
+      border-radius: 50%;
+      background: conic-gradient(var(--blue-deep) 0 46%, var(--cyan) 46% 68%, var(--leaf) 68% 84%, var(--earth) 84% 100%);
+      display: grid;
+      place-items: center;
+      box-shadow: inset 0 0 0 1px rgba(4, 90, 122, .12);
+    }
+
+    .donut::after {
+      content: "70k";
+      width: 70px;
+      height: 70px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      background: white;
+      color: var(--blue-deep);
+      font-weight: 900;
+      font-size: 24px;
+    }
+
+    .legend {
+      display: grid;
+      gap: 7px;
+    }
+
+    .legend div {
+      display: grid;
+      grid-template-columns: 12px 1fr auto;
+      gap: 8px;
+      align-items: center;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .swatch {
+      width: 12px;
+      height: 12px;
+      border-radius: 3px;
+      background: var(--c);
     }
 
     .comparison {
@@ -358,18 +514,18 @@
 
     .comparison th,
     .comparison td {
-      text-align: left;
-      padding: 16px;
+      padding: 12px 13px;
       border-bottom: 1px solid var(--line);
+      text-align: left;
       vertical-align: top;
-      font-size: clamp(14px, 1.3vw, 18px);
-      line-height: 1.38;
+      font-size: clamp(12px, 1.05vw, 15px);
+      line-height: 1.28;
     }
 
     .comparison th {
       color: var(--blue-deep);
-      background: rgba(113, 208, 229, .13);
-      font-size: 13px;
+      background: rgba(103, 215, 239, .16);
+      font-size: 11px;
       letter-spacing: .08em;
       text-transform: uppercase;
     }
@@ -378,64 +534,113 @@
       border-bottom: 0;
     }
 
+    .budget-grid {
+      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+      align-items: center;
+    }
+
+    .budget-card {
+      display: grid;
+      gap: 12px;
+    }
+
+    .money {
+      color: var(--blue-deep);
+      font-size: clamp(42px, 5.8vw, 76px);
+      font-weight: 900;
+      line-height: .9;
+    }
+
     .timeline {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: 28px;
+      align-items: stretch;
+      margin-top: 18px;
+      position: relative;
+    }
+
+    .timeline::before {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      top: 42px;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--blue-deep), var(--cyan), var(--leaf));
+      opacity: .55;
     }
 
     .timeline-item {
-      border-top: 5px solid var(--blue);
-      min-height: 190px;
+      min-height: 174px;
+      display: grid;
+      gap: 8px;
+      align-content: start;
+      position: relative;
+      padding-top: 56px;
+    }
+
+    .date-pill {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      color: white;
+      background: linear-gradient(135deg, var(--blue-deep), var(--blue));
+      font-size: 13px;
+      font-weight: 850;
+      box-shadow: 0 8px 18px rgba(7, 136, 189, .24);
     }
 
     .impact-grid,
     .ask-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: 28px;
+      margin-top: 18px;
     }
 
     .impact,
     .ask {
       display: grid;
-      gap: 12px;
+      gap: 9px;
       align-content: start;
     }
 
     .big-number {
       color: var(--blue-deep);
-      font-size: clamp(48px, 8vw, 92px);
-      font-weight: 850;
-      line-height: .9;
+      font-size: clamp(42px, 6vw, 78px);
+      font-weight: 900;
+      line-height: .82;
     }
 
     .badge-list {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 24px;
+      gap: 8px;
+      margin-top: 16px;
     }
 
     .badge {
-      color: var(--blue-deep);
-      border: 1px solid rgba(14, 143, 189, .25);
+      padding: 8px 11px;
+      border: 1px solid rgba(7, 136, 189, .24);
       border-radius: 999px;
-      background: rgba(255, 255, 255, .74);
-      padding: 9px 13px;
-      font-size: 14px;
-      font-weight: 750;
+      background: rgba(255, 255, 255, .76);
+      color: var(--blue-deep);
+      font-size: 12px;
+      font-weight: 800;
     }
 
     footer {
       grid-template-columns: 1fr auto;
       align-items: center;
-      font-size: 13px;
+      position: relative;
+      z-index: 2;
     }
 
     .progress {
-      width: min(210px, 38vw);
+      width: min(190px, 36vw);
       height: 5px;
       border-radius: 999px;
-      background: rgba(16, 35, 48, .12);
+      background: rgba(12, 39, 51, .12);
       overflow: hidden;
     }
 
@@ -443,21 +648,80 @@
       display: block;
       width: var(--value);
       height: 100%;
-      background: linear-gradient(90deg, var(--blue), var(--leaf));
+      background: linear-gradient(90deg, var(--blue-deep), var(--cyan), var(--leaf));
+    }
+
+    @media (max-height: 760px) and (min-width: 861px) {
+      .canvas {
+        gap: 9px;
+        padding: 14px 22px;
+      }
+
+      h1 {
+        font-size: clamp(44px, 6.8vw, 76px);
+      }
+
+      h2 {
+        font-size: clamp(26px, 3.7vw, 44px);
+      }
+
+      .lead {
+        font-size: clamp(17px, 1.55vw, 22px);
+        margin-top: 12px;
+      }
+
+      .metric-row,
+      .steps,
+      .timeline,
+      .impact-grid,
+      .ask-grid {
+        margin-top: 12px;
+      }
+
+      .metric,
+      .card,
+      .step,
+      .timeline-item,
+      .impact,
+      .ask,
+      .chart-card,
+      .budget-card {
+        padding: 11px 13px;
+      }
+
+      .card,
+      .metric {
+        min-height: 112px;
+      }
+
+      .step,
+      .timeline-item {
+        min-height: 148px;
+      }
+
+      p,
+      li {
+        font-size: 13px;
+      }
     }
 
     @media (max-width: 860px) {
       .deck {
+        height: auto;
+        overflow: visible;
         scroll-snap-type: none;
       }
 
       .slide {
-        min-height: auto;
-        padding: 14px;
+        height: auto;
+        min-height: 100dvh;
+        padding: 12px;
       }
 
       .canvas {
-        min-height: auto;
+        height: auto;
+        min-height: calc(100dvh - 24px);
+        overflow: visible;
       }
 
       header {
@@ -465,43 +729,50 @@
       }
 
       .stage {
-        justify-self: start;
         grid-column: 1 / -1;
-        grid-row: 2;
+        justify-self: start;
       }
 
       .slide-nav {
         display: none;
       }
 
+      .grid,
       .hero,
-      .split,
       .metric-row,
       .cards,
       .steps,
+      .charts,
       .timeline,
       .impact-grid,
-      .ask-grid {
+      .ask-grid,
+      .budget-grid {
         grid-template-columns: 1fr;
-      }
-
-      h1 {
-        max-width: 11ch;
       }
 
       h2 {
         max-width: 100%;
       }
 
-      .step,
-      .timeline-item,
-      .card {
-        min-height: auto;
+      .logo-hero {
+        width: min(280px, 74vw);
+      }
+
+      .timeline::before {
+        display: none;
       }
 
       .comparison {
         display: block;
         overflow-x: auto;
+      }
+
+      .donut-wrap {
+        grid-template-columns: 112px 1fr;
+      }
+
+      .donut {
+        width: 112px;
       }
     }
 
@@ -516,13 +787,13 @@
       }
 
       .slide {
-        min-height: 100vh;
+        height: 100vh;
         page-break-after: always;
       }
 
       .canvas {
+        height: calc(100vh - 32px);
         box-shadow: none;
-        border: 1px solid #d8e4e8;
       }
 
       .slide-nav {
@@ -536,14 +807,11 @@
     <section class="slide" id="slide-1">
       <div class="canvas">
         <header>
-          <div class="brand">
-            <img src="logo.png" alt="Aqua logo">
-            <div><strong>Aqua</strong><span>smart water reuse</span></div>
-          </div>
+          <div class="brand"><img src="logo.png" alt="Aqua logo"><div><strong>Aqua</strong><span>smart water reuse</span></div></div>
           <div class="stage">Инвесторская презентация</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev aria-label="Предыдущий слайд">‹</button><button class="nav-btn" data-next aria-label="Следующий слайд">›</button></div>
+          <div class="slide-nav"><button class="nav-btn" data-prev aria-label="Предыдущий слайд">&lsaquo;</button><button class="nav-btn" data-next aria-label="Следующий слайд">&rsaquo;</button></div>
         </header>
-        <main class="hero split">
+        <main class="grid hero">
           <div>
             <div class="kicker">Умная система сбора дождевой воды</div>
             <h1>Aqua</h1>
@@ -565,19 +833,30 @@
         <header>
           <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>problem</span></div></div>
           <div class="stage">Тема 1: проблема</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>‹</button><button class="nav-btn" data-next>›</button></div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
         </header>
         <main>
           <div class="kicker">Вода теряется до того, как приносит пользу</div>
-          <h2>Кыргызстану нужна более точная модель управления водой</h2>
+          <h2>Кыргызстану нужна точная модель управления водой</h2>
           <div class="metric-row">
             <div class="metric"><strong>40%</strong><span>поливной воды теряется при транспортировке из-за изношенной ирригационной инфраструктуры</span></div>
             <div class="metric"><strong>2+ млрд</strong><span>кубометров утечек в год по оценке проблемы водопотерь</span></div>
             <div class="metric"><strong>25%+</strong><span>потерь пресной воды от общего объема водозабора</span></div>
           </div>
-          <div class="cards">
-            <div class="card"><div class="icon">!</div><h3>Полив часто остается ручным</h3><p>Решения по воде принимаются по расписанию, без учета влажности почвы, погоды и состояния растений.</p></div>
-            <div class="card"><div class="icon">↓</div><h3>Дождевая вода уходит в дренаж</h3><p>Города и частный сектор почти не используют дождевую воду повторно, хотя она может снижать нагрузку на водные ресурсы.</p></div>
+          <div class="charts">
+            <div class="chart-card">
+              <h3>Где теряется вода</h3>
+              <div class="bar-chart">
+                <div class="bar-row"><span>Транспорт</span><div class="bar"><i style="--w:40%"></i></div><b>40%</b></div>
+                <div class="bar-row"><span>Ручной полив</span><div class="bar"><i style="--w:32%"></i></div><b>32%</b></div>
+                <div class="bar-row"><span>Дренаж</span><div class="bar"><i style="--w:28%"></i></div><b>28%</b></div>
+              </div>
+              <span>Иллюстративная структура проблемы для инвесторского объяснения.</span>
+            </div>
+            <div class="cards">
+              <div class="card"><div class="icon">!</div><h3>Полив часто остается ручным</h3><p>Решения принимаются по расписанию, без учета влажности почвы, погоды и состояния растений.</p></div>
+              <div class="card"><div class="icon">↓</div><h3>Дождевая вода уходит в дренаж</h3><p>Города и частный сектор почти не используют дождевую воду повторно, хотя она может снижать нагрузку на ресурсы.</p></div>
+            </div>
           </div>
         </main>
         <footer><span>02 / 10</span><div class="progress"><span style="--value:20%"></span></div></footer>
@@ -589,12 +868,12 @@
         <header>
           <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>solution</span></div></div>
           <div class="stage">Тема 2: решение</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>‹</button><button class="nav-btn" data-next>›</button></div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
         </header>
-        <main class="split">
+        <main class="grid">
           <div>
             <div class="kicker">Что делает продукт</div>
-            <h2>Автономно собирает воду и подает ее тогда, когда она действительно нужна</h2>
+            <h2>Собирает воду и подает ее тогда, когда она нужна</h2>
             <p class="lead">Aqua объединяет резервуар, фильтрацию, насос, контроллер, датчики влажности и ML-модель для оптимального полива.</p>
           </div>
           <div class="cards">
@@ -613,7 +892,7 @@
         <header>
           <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>workflow</span></div></div>
           <div class="stage">Тема 3: как работает</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>‹</button><button class="nav-btn" data-next>›</button></div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
         </header>
         <main>
           <div class="kicker">Этапы работы системы</div>
@@ -623,6 +902,20 @@
             <div class="step"><b>2</b><h3>Хранение</h3><p>Вода очищается от крупных загрязнений и сохраняется в подземном резервуаре.</p></div>
             <div class="step"><b>3</b><h3>Фильтрация</h3><p>Фильтры доводят воду до качества, пригодного для полива.</p></div>
             <div class="step"><b>4</b><h3>ML-полив</h3><p>Модель учитывает влажность, погоду и историю участка, оптимизируя расход.</p></div>
+          </div>
+          <div class="charts">
+            <div class="chart-card">
+              <h3>Цикл данных</h3>
+              <div class="bar-chart">
+                <div class="bar-row"><span>Датчики</span><div class="bar"><i style="--w:78%"></i></div><b>live</b></div>
+                <div class="bar-row"><span>Погода</span><div class="bar"><i style="--w:64%"></i></div><b>API</b></div>
+                <div class="bar-row"><span>ML</span><div class="bar"><i style="--w:86%"></i></div><b>opt</b></div>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3>Результат</h3>
+              <p>Экономия воды, снижение затрат на полив, здоровье растений, стабильный рост и вклад в устойчивое будущее.</p>
+            </div>
           </div>
         </main>
         <footer><span>04 / 10</span><div class="progress"><span style="--value:40%"></span></div></footer>
@@ -634,7 +927,7 @@
         <header>
           <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>advantage</span></div></div>
           <div class="stage">Тема 4: конкуренты</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>‹</button><button class="nav-btn" data-next>›</button></div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
         </header>
         <main>
           <div class="kicker">Почему не просто таймер или бак</div>
@@ -658,19 +951,31 @@
         <header>
           <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>business</span></div></div>
           <div class="stage">Тема 5: бизнес-модель</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>‹</button><button class="nav-btn" data-next>›</button></div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
         </header>
-        <main class="split">
+        <main class="budget-grid">
           <div>
             <div class="kicker">Коммерческая логика</div>
-            <h2>Продажа системы, установка и сервис</h2>
-            <p class="lead">Базовая unit-экономика: ориентир стоимости комплекта около 70 000 сом с потенциалом повторной выручки через обслуживание и ПО.</p>
+            <h2>Комплект, установка, сервис и ПО</h2>
+            <p class="lead">Базовая unit-экономика: ориентир стоимости комплекта около 70 000 сом с потенциалом повторной выручки через обслуживание и программные функции.</p>
+            <div class="badge-list">
+              <span class="badge">B2B: теплицы, фермы, агрокомплексы</span>
+              <span class="badge">B2C: дома, дачи, сады</span>
+            </div>
           </div>
-          <div class="cards">
-            <div class="card"><div class="icon">B</div><h3>B2B</h3><p>Агрокомплексы, теплицы, фермы, муниципальные и экологические организации.</p></div>
-            <div class="card"><div class="icon">C</div><h3>B2C</h3><p>Частные дома, дачи, сады и небольшие хозяйства.</p></div>
-            <div class="card"><div class="icon">₸</div><h3>Затраты</h3><p>Оборудование, разработка ПО, установка, логистика, обслуживание и маркетинг.</p></div>
-            <div class="card"><div class="icon">↗</div><h3>Масштаб</h3><p>Пилоты в регионах, база данных ML и партнерские внедрения.</p></div>
+          <div class="budget-card">
+            <div class="money">70 000 сом</div>
+            <h3>Куда идут деньги в одном комплекте</h3>
+            <div class="donut-wrap">
+              <div class="donut" aria-label="Диаграмма структуры затрат"></div>
+              <div class="legend">
+                <div><i class="swatch" style="--c:var(--blue-deep)"></i><span>Оборудование и резервуар</span><b>46%</b></div>
+                <div><i class="swatch" style="--c:var(--cyan)"></i><span>Установка и логистика</span><b>22%</b></div>
+                <div><i class="swatch" style="--c:var(--leaf)"></i><span>ПО, датчики и ML</span><b>16%</b></div>
+                <div><i class="swatch" style="--c:var(--earth)"></i><span>Сервис и маркетинг</span><b>16%</b></div>
+              </div>
+            </div>
+            <span>Проценты можно уточнить после первых пилотов и коммерческих предложений поставщиков.</span>
           </div>
         </main>
         <footer><span>06 / 10</span><div class="progress"><span style="--value:60%"></span></div></footer>
@@ -682,7 +987,7 @@
         <header>
           <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>traction</span></div></div>
           <div class="stage">Тема 6: прогресс</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>‹</button><button class="nav-btn" data-next>›</button></div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
         </header>
         <main>
           <div class="kicker">Что уже сделано</div>
@@ -691,7 +996,7 @@
             <div class="card"><div class="icon">✓</div><h3>Исследование проблемы</h3><p>Изучены водопотери, ручной полив и потребность в автоматизации.</p></div>
             <div class="card"><div class="icon">?</div><h3>Анализ рынка</h3><p>Проведены опросы фермеров и анализ существующих решений.</p></div>
             <div class="card"><div class="icon">+</div><h3>Первые бенефициары</h3><p>Определены хозяйства и организации, которым система может дать быстрый эффект.</p></div>
-            <div class="card"><div class="icon">AI</div><h3>AI-составляющая</h3><p>Модель будет учиться на испарении влаги, прогнозе погоды и данных конкретной теплицы или участка.</p></div>
+            <div class="card"><div class="icon">AI</div><h3>AI-составляющая</h3><p>Модель учится на испарении влаги, прогнозе погоды и данных конкретной теплицы или участка.</p></div>
           </div>
         </main>
         <footer><span>07 / 10</span><div class="progress"><span style="--value:70%"></span></div></footer>
@@ -703,7 +1008,7 @@
         <header>
           <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>impact</span></div></div>
           <div class="stage">Тема 7: эффект</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>‹</button><button class="nav-btn" data-next>›</button></div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
         </header>
         <main>
           <div class="kicker">ESG и цели устойчивого развития</div>
@@ -713,10 +1018,20 @@
             <div class="impact"><div class="big-number">S</div><h3>Социальный эффект</h3><p>Упрощение ухода за растениями и повышение доступности smart-технологий для хозяйств.</p></div>
             <div class="impact"><div class="big-number">G</div><h3>Экономика</h3><p>Снижение расходов на воду и полив, автоматизация процессов для домов и агробизнеса.</p></div>
           </div>
-          <div class="badge-list">
-            <span class="badge">SDG 6: Clean Water</span>
-            <span class="badge">SDG 12: Responsible Consumption</span>
-            <span class="badge">SDG 13: Climate Action</span>
+          <div class="charts">
+            <div class="chart-card">
+              <h3>Ожидаемый эффект</h3>
+              <div class="bar-chart">
+                <div class="bar-row"><span>Вода</span><div class="bar"><i style="--w:72%"></i></div><b>-30%</b></div>
+                <div class="bar-row"><span>Ручной труд</span><div class="bar"><i style="--w:82%"></i></div><b>-50%</b></div>
+                <div class="bar-row"><span>Стабильность</span><div class="bar"><i style="--w:68%"></i></div><b>+25%</b></div>
+              </div>
+            </div>
+            <div class="badge-list">
+              <span class="badge">SDG 6: Clean Water</span>
+              <span class="badge">SDG 12: Responsible Consumption</span>
+              <span class="badge">SDG 13: Climate Action</span>
+            </div>
           </div>
         </main>
         <footer><span>08 / 10</span><div class="progress"><span style="--value:80%"></span></div></footer>
@@ -728,15 +1043,29 @@
         <header>
           <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>roadmap</span></div></div>
           <div class="stage">Тема 8: roadmap</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>‹</button><button class="nav-btn" data-next>›</button></div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
         </header>
         <main>
           <div class="kicker">Цели на 12 месяцев</div>
           <h2>От MVP к региональному масштабированию</h2>
           <div class="timeline">
-            <div class="timeline-item"><span>Июль</span><h3>Запуск MVP</h3><p>Первые пилотные пользователи, сбор обратной связи и проверка установки.</p></div>
-            <div class="timeline-item"><span>Август</span><h3>Полный запуск ML</h3><p>Подключение 50+ пользователей и поиск пилотных регионов.</p></div>
-            <div class="timeline-item"><span>Апрель</span><h3>Масштабирование</h3><p>Выход на все области и расширение базы данных для ML-модели.</p></div>
+            <div class="timeline-item"><span class="date-pill">Июль 2026</span><h3>Запуск MVP</h3><p>Первые пилотные пользователи, сбор обратной связи и проверка установки.</p></div>
+            <div class="timeline-item"><span class="date-pill">Август 2026</span><h3>Полный запуск ML</h3><p>Подключение 50+ пользователей и поиск пилотных регионов.</p></div>
+            <div class="timeline-item"><span class="date-pill">Апрель 2027</span><h3>Масштабирование</h3><p>Выход на все области и расширение базы данных для ML-модели.</p></div>
+          </div>
+          <div class="charts">
+            <div class="chart-card">
+              <h3>План подключений</h3>
+              <div class="bar-chart">
+                <div class="bar-row"><span>Июль</span><div class="bar"><i style="--w:18%"></i></div><b>MVP</b></div>
+                <div class="bar-row"><span>Август</span><div class="bar"><i style="--w:52%"></i></div><b>50+</b></div>
+                <div class="bar-row"><span>Апрель</span><div class="bar"><i style="--w:100%"></i></div><b>регионы</b></div>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3>Преодоленные вызовы</h3>
+              <p>Недоверие фермеров к новым технологиям, адаптация идеи под местный рынок и поиск подходящей бизнес-модели.</p>
+            </div>
           </div>
         </main>
         <footer><span>09 / 10</span><div class="progress"><span style="--value:90%"></span></div></footer>
@@ -748,7 +1077,7 @@
         <header>
           <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>ask</span></div></div>
           <div class="stage">Тема 9: что нужно сейчас</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>‹</button><button class="nav-btn" data-next>›</button></div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
         </header>
         <main>
           <div class="kicker">Запрос к инвесторам и партнерам</div>
