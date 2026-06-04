@@ -1,0 +1,499 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Пчелиный Дом — Презентация</title>
+  <!-- Tailwind via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+/* --- Honeycomb SVG background + animations --- */
+    :root{--accent:#F6A800;--dark:#0b1320}
+    .honey-bg{position:fixed;inset:0;z-index:-10;opacity:0.12;pointer-events:none}
+    /* hexagon grid mask for some slides */
+    .hex {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(56px, 1fr));
+      gap: 8px;
+      justify-items: center;
+      align-items: center;
+      padding: 24px;
+    }
+    .hex .cell{
+      width:56px;height:64px;clip-path:polygon(25% 6.7%,75% 6.7%,100% 50%,75% 93.3%,25% 93.3%,0% 50%);
+      background:linear-gradient(180deg,rgba(246,168,0,0.95),rgba(255,220,120,0.9));
+      box-shadow:0 6px 18px rgba(11,19,32,0.12), inset 0 -6px 12px rgba(0,0,0,0.08);
+      transform-origin:center;
+      transition:transform .35s ease, filter .25s ease, box-shadow .25s ease;
+    }
+    .hex .cell.small{width:40px;height:46px}
+    .hex .cell:hover{transform:translateY(-6px) scale(1.06);filter:brightness(1.03);box-shadow:0 14px 28px rgba(11,19,32,0.18)}
+
+    /* subtle floating animation for cells */
+    @keyframes floaty{
+      0%{transform:translateY(0)}
+      50%{transform:translateY(-6px)}
+      100%{transform:translateY(0)}
+    }
+    .floating{animation:floaty 6s ease-in-out infinite}
+
+    /* slide system */
+    .slides{position:relative;overflow:hidden}
+    .slide{min-height:80vh;padding:6rem 2rem;transition:opacity .6s ease,transform .6s ease;}
+    .slide:not(.active){opacity:0;transform:translateX(6%);pointer-events:none;position:absolute;inset:0}
+
+    /* honeycomb mask header */
+    .honey-clip{position:relative}
+    .honey-clip::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,19,32,0.02),rgba(11,19,32,0.06));mix-blend-mode:multiply}
+
+    /* small decorative bees (CSS) */
+    .bee{width:28px;height:18px;border-radius:999px;background:linear-gradient(90deg,#F6A800,#FFD37A);position:absolute;transform-origin:center;box-shadow:0 4px 10px rgba(11,19,32,0.12)}
+    .bee::after{content:'';position:absolute;right:-6px;top:2px;width:8px;height:12px;background:rgba(255,255,255,0.9);border-radius:2px;opacity:.65}
+    @keyframes beeFly{0%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(120px,-36px) rotate(10deg)}100%{transform:translate(0,0) rotate(0deg)}}
+    .bee.fly{animation:beeFly 8s linear infinite}
+
+    /* nav buttons */
+    .nav-btn{width:52px;height:52px;border-radius:999px;background:rgba(255,255,255,0.9);display:grid;place-items:center;box-shadow:0 8px 24px rgba(11,19,32,0.14)}
+
+    /* responsive tweaks */
+    @media (max-width:768px){
+      .slide{padding:4rem 1rem}
+      .hex{grid-template-columns:repeat(auto-fit,minmax(44px,1fr))}
+    }
+  </style>
+</head>
+<body class="bg-gradient-to-b from-white to-slate-50 text-slate-900 antialiased">
+    <!-- Honeycomb PNG background for slides 1-2 -->
+    <img src="https://foni.papik.pro/uploads/posts/2024-10/foni-papik-pro-z0e4-p-kartinki-soti-meda-na-prozrachnom-fone-2.png"
+      alt="Соты фон"
+      style="position:fixed;z-index:-5;top:0;left:0;width:100vw;height:100vh;object-fit:cover;opacity:0.13;pointer-events:none;"
+      class="honeycomb-bg-img" />
+    <!-- Новый общий фон для всех слайдов (очень прозрачный) -->
+    <img src="https://resizer.mail.ru/p/47f17987-b5df-5d5e-9caf-39ce5d9cba7b/AQAKsf6PDj50dkQhL6k75Edic7g-Bzc2OfclLwRMpzvc4XHHvl8KdEqjOVDmONLXNWAI8-OHK1Ia4fNCuYE9UOY8Dyc.jpg"
+      alt="Пчёлы крупно"
+      style="position:fixed;z-index:-4;top:0;left:0;width:100vw;height:100vh;object-fit:cover;opacity:0.08;pointer-events:none;" />
+
+  <!-- Decorative honeycomb background (SVG pattern) -->
+  <svg class="honey-bg" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice">
+    <defs>
+      <pattern id="hexpat" x="0" y="0" width="96" height="82" patternUnits="userSpaceOnUse" patternTransform="scale(1)">
+        <polygon points="24,6 72,6 96,41 72,76 24,76 0,41" fill="url(#hgrad)" opacity="0.85" />
+        <linearGradient id="hgrad" x1="0" x2="0" y1="0" y2="1">
+          <stop offset="0" stop-color="#FDE68A" />
+          <stop offset="1" stop-color="#F59E0B" />
+        </linearGradient>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#hexpat)"/>
+  </svg>
+
+  <!-- App container -->
+  <div class="max-w-6xl mx-auto py-12 px-4">
+    <header class="flex items-center justify-between mb-8">
+      <div class="flex items-center gap-4">
+        <div class="w-14 h-14 rounded-full bg-gradient-to-br from-yellow-400 to-orange-400 flex items-center justify-center shadow-lg">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2l2 4 4 .5-3 2 1.2 4L12 11.5 7.8 12 9 8 6 6.5 10 6z" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <div>
+          <h1 class="text-2xl font-semibold">Пчелиный Дом</h1>
+          <p class="text-sm text-slate-600">Устойчивое опыление для малых фермеров Кыргызстана — презентация</p>
+        </div>
+      </div>
+
+      <nav class="flex items-center gap-3">
+        <button id="prev" class="nav-btn" aria-label="Prev">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <button id="next" class="nav-btn" aria-label="Next">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </nav>
+    </header>
+
+    <!-- Slides -->
+    <main class="slides relative bg-white rounded-2xl shadow-xl overflow-hidden">
+
+      <!-- Slide 1 — Title / команда -->
+      <section class="slide active honey-clip" data-index="0">
+        <div class="grid md:grid-cols-2 gap-6 items-center">
+          <div class="p-8">
+            <h2 class="text-4xl font-extrabold mb-4">ПРОЕКТНОЕ ПРЕДЛОЖЕНИЕ<br><span class="text-yellow-600">«Пчелиный Дом»</span></h2>
+            <p class="text-slate-600 mb-6">Устойчивое опыление для малых фермеров Кыргызстана</p>
+
+            <div class="bg-amber-50 p-4 rounded-lg border border-amber-100">
+              <h3 class="font-semibold">Команда: Кавказики</h3>
+              <ul class="mt-2 text-sm text-slate-700 space-y-1">
+                <li>Эгенбердиев Данияр — СОШ 2</li>
+                <li>Баймуратова Эльнура — КНУ, Международные отношения</li>
+                <li>Джанышова Гулжан — КНУ колледж, менеджмент</li>
+              </ul>
+            </div>
+
+            <div class="mt-6 flex gap-3">
+              <button id="btn-start" class="px-4 py-2 rounded-lg bg-yellow-500 text-white shadow hover:scale-105 transition">Начать презентацию</button>
+              <button id="btn-autoplay" class="px-4 py-2 rounded-lg border border-slate-200 bg-white hover:bg-slate-50">Автоплей</button>
+            </div>
+          </div>
+
+          <div class="p-8">
+            <!-- big honeycomb visual -->
+            <div class="hex grid-cols-4">
+              <div class="cell floating"></div>
+              <div class="cell small"></div>
+              <div class="cell floating"></div>
+              <div class="cell small"></div>
+              <div class="cell"></div>
+              <div class="cell floating small"></div>
+              <div class="cell"></div>
+              <div class="cell floating"></div>
+            </div>
+
+            <div class="relative mt-6">
+              <div class="bee fly" style="left:20px;top:-10px"></div>
+              <div class="bee" style="left:80px;top:30px;animation-delay:2s"></div>
+            </div>
+          </div>
+        </div>
+        <!-- overlay honeycomb PNG for extra accent -->
+        <img src="https://foni.papik.pro/uploads/posts/2024-10/foni-papik-pro-z0e4-p-kartinki-soti-meda-na-prozrachnom-fone-2.png"
+          alt="Соты"
+          style="position:absolute;right:0;bottom:0;width:220px;opacity:0.18;pointer-events:none;z-index:1;" />
+        <!-- Новая фотка сбоку -->
+        <img src="https://images.techinsider.ru/upload/img_cache/1d6/1d60cf11d8d7849c7cd3e7b127d03524_ce_620x413x3x0.jpg"
+          alt="Пчёлы на сотах"
+          style="position:absolute;left:0;bottom:0;width:180px;opacity:0.16;pointer-events:none;z-index:1;" />
+      </section>
+
+      <!-- Slide 2 — Проблема -->
+      <section class="slide" data-index="1">
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-3">1. Проблема</h3>
+          <p class="text-slate-700 leading-relaxed mb-4">
+            В Кыргызстане фермеры каждый год сталкиваются с падением урожайности ягод и фруктов. Кусты здоровые, вода есть, удобрения есть — а урожая всё меньше.<br>
+            Главная причина — недостаток опыления. Дикие пчёлы и шмели исчезают, а без них растения просто не могут дать хороший урожай.
+          </p>
+          <h4 class="font-semibold mt-4 mb-2">2. Статистика боли</h4>
+          <p class="text-slate-700 mb-4">
+            В Чуйской долине урожайность падает каждый год.<br>
+            Дикие опылители обеспечивают до 70% естественного опыления, но их популяции стремительно сокращаются из-за отсутствия мест для гнездования, химизации и изменения климата.
+          </p>
+          <div class="bg-white border-l-4 border-amber-300 p-4 rounded-lg shadow-sm mb-4">
+            <h4 class="font-semibold">Пример бенефициара</h4>
+            <p class="text-slate-700 mt-2">
+              Фермер Талант выращивает малину на 5 сотках. Его урожай упал с 50 кг до 35 кг — минус 30%, хотя растения полностью здоровы.<br>
+              То есть проблема — не агротехника, а отсутствие насекомых-опылителей.
+            </p>
+          </div>
+          <p class="text-slate-700 mb-4">
+            Эксперты говорят, что если фермеры не откажутся от пестицидов, то мир в скором времени столкнётся с недостатком еды.
+          </p>
+          <!-- decorative small honeycomb -->
+          <div class="mt-6 hex">
+            <div class="cell small floating"></div>
+            <div class="cell small"></div>
+            <div class="cell small floating"></div>
+            <div class="cell small"></div>
+            <div class="cell small floating"></div>
+          </div>
+        </div>
+        <!-- overlay honeycomb PNG for extra accent -->
+        <img src="https://foni.papik.pro/uploads/posts/2024-10/foni-papik-pro-z0e4-p-kartinki-soti-meda-na-prozrachnom-fone-2.png"
+          alt="Соты"
+          style="position:absolute;left:0;top:0;width:180px;opacity:0.13;pointer-events:none;z-index:1;" />
+        <!-- Новая фотка сбоку -->
+        <img src="https://resizer.mail.ru/p/47f17987-b5df-5d5e-9caf-39ce5d9cba7b/AQAKsf6PDj50dkQhL6k75Edic7g-Bzc2OfclLwRMpzvc4XHHvl8KdEqjOVDmONLXNWAI8-OHK1Ia4fNCuYE9UOY8Dyc.jpg"
+          alt="Пчёлы крупно"
+          style="position:absolute;right:0;top:0;width:180px;opacity:0.13;pointer-events:none;z-index:1;" />
+      </section>
+
+      <!-- Slide 3 — Решение -->
+      <section class="slide" data-index="2">
+        <div class="p-8 grid md:grid-cols-2 gap-6 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-3">2. Решение</h3>
+            <p class="text-slate-700 mb-4">
+              Наш проект — <b>«Пчелиный Дом»</b>.<br>
+              Мы создаём компактные домики для диких опылителей — пчёл-одиночек и шмелей — чтобы восстановить опыление на фермерских участках.<br>
+              Это экологичное решение, без химикатов и без содержания медоносных пчёл.<br>
+              Домики притягивают диких опылителей, которые живут рядом и работают только на эту территорию.
+            </p>
+            <h4 class="font-semibold mt-4 mb-2">Как работает решение</h4>
+            <ul class="list-disc pl-5 text-slate-700 mb-4">
+              <li>Деревянная конструкция ~1 м²</li>
+              <li>Внутри — трубочки 6–10 мм, где дикие пчёлы откладывают потомство</li>
+              <li>Защита от дождя и влаги</li>
+              <li>Срок службы: 3–5 лет</li>
+              <li>Радиус действия: 200–300 м</li>
+            </ul>
+            <p class="text-slate-700 mb-4">
+              Дикие пчёлы опыляют растения в 2–3 раза эффективнее медоносных.<br>
+              <b>Эффект:</b> уже в первый сезон — +35–40% урожайности.<br>
+              Для участка фермера Таланта нужен всего один домик.
+            </p>
+            <div class="mt-6 hex">
+              <!-- a few cells animate in sequence -->
+              <div class="cell floating" style="animation-delay:.2s"></div>
+              <div class="cell" style="animation-delay:.4s"></div>
+              <div class="cell floating" style="animation-delay:.6s"></div>
+              <div class="cell" style="animation-delay:.8s"></div>
+              <div class="cell floating" style="animation-delay:1s"></div>
+            </div>
+          </div>
+          <div class="flex flex-col items-center">
+            <!-- Фото пчелы с нектаром -->
+            <img src="https://upload.wikimedia.org/wikipedia/commons/1/1d/European_honey_bee_extracts_nectar.jpg"
+              alt="Пчела собирает нектар"
+              class="rounded-xl shadow-lg mb-4 w-full max-w-xs" style="object-fit:cover;">
+            <!-- Новая фотка -->
+            <img src="https://images.techinsider.ru/upload/img_cache/1d6/1d60cf11d8d7849c7cd3e7b127d03524_ce_620x413x3x0.jpg"
+              alt="Пчёлы на сотах"
+              class="rounded-xl shadow mb-4 w-full max-w-xs" style="object-fit:cover;opacity:0.85;">
+          </div>
+        </div>
+        <!-- Фон слайда -->
+        <img src="https://resizer.mail.ru/p/47f17987-b5df-5d5e-9caf-39ce5d9cba7b/AQAKsf6PDj50dkQhL6k75Edic7g-Bzc2OfclLwRMpzvc4XHHvl8KdEqjOVDmONLXNWAI8-OHK1Ia4fNCuYE9UOY8Dyc.jpg"
+          alt="Пчёлы крупно"
+          style="position:absolute;left:0;top:0;width:100%;height:100%;object-fit:cover;opacity:0.07;pointer-events:none;z-index:0;" />
+      </section>
+
+      <!-- Slide 4 — Масштабирование и бизнес-модель -->
+      <section class="slide" data-index="3">
+        <div class="p-8 grid md:grid-cols-2 gap-6 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-3">3. Бизнес-план</h3>
+            <div class="grid md:grid-cols-2 gap-4">
+              <div>
+                <ul class="list-disc pl-5 text-slate-700 mb-3">
+                  <li>Продажа домиков: себестоимость 2000 сом, продажа 3000–4000 сом</li>
+                  <li>Аренда домиков с пчёлами: 2000 сом/месяц</li>
+                  <li>Продажа матки пчёл: 1 матка — 1000 сом</li>
+                </ul>
+                <p class="text-slate-700 mb-2">
+                  Сезон покупок: с весны до августа.<br>
+                  За эти месяцы планируется сделать более 500 домиков и увеличить количество пчёл в Чуйской области.
+                </p>
+                <p class="text-slate-700 mb-3">
+                  Себестоимость: <strong>2000 сом</strong>. Продажная цена: <strong>3000 сом</strong>. Маржа: <strong>1000 сом</strong>.<br>
+                  Пример: продано 15 домиков → прибыль 30 000 сомов.
+                </p>
+                <ul class="mt-4 list-disc pl-5 text-slate-700">
+                  <li>Установка и ориентация по солнцу</li>
+                  <li>Сезонный уход</li>
+                  <li>Аренда домиков для малых участков</li>
+                </ul>
+              </div>
+              <div class="bg-white rounded-lg p-4 border shadow-sm">
+                <h4 class="font-semibold">Планы</h4>
+                <p class="text-slate-700 mt-2">
+                  Продвижение в другие регионы и Бишкек: уличные сады, теплицы, образовательные центры.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="flex flex-col items-center">
+            <!-- Фото улья/пчёл -->
+            <img src="https://facts.museum/img/facts/3749.jpg"
+              alt="Пчёлы на улье"
+              class="rounded-xl shadow-lg mb-4 w-full max-w-xs" style="object-fit:cover;">
+            <!-- Новая фотка -->
+            <img src="https://resizer.mail.ru/p/47f17987-b5df-5d5e-9caf-39ce5d9cba7b/AQAKsf6PDj50dkQhL6k75Edic7g-Bzc2OfclLwRMpzvc4XHHvl8KdEqjOVDmONLXNWAI8-OHK1Ia4fNCuYE9UOY8Dyc.jpg"
+              alt="Пчёлы крупно"
+              class="rounded-xl shadow mb-4 w-full max-w-xs" style="object-fit:cover;opacity:0.85;">
+          </div>
+        </div>
+        <!-- Фон слайда -->
+        <img src="https://images.techinsider.ru/upload/img_cache/1d6/1d60cf11d8d7849c7cd3e7b127d03524_ce_620x413x3x0.jpg"
+          alt="Пчёлы на сотах"
+          style="position:absolute;right:0;bottom:0;width:220px;opacity:0.10;pointer-events:none;z-index:1;" />
+      </section>
+
+      <!-- Slide 5 — Финансы -->
+      <section class="slide" data-index="4">
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-3">4. Финансовый расчёт</h3>
+          <div class="grid md:grid-cols-2 gap-4 items-start">
+            <div>
+              <p class="text-slate-700">Старт: 10 домиков × 2000 сом = <strong>20 000 сом</strong>.</p>
+              <p class="text-slate-700">Продажа: 10 × 3000 = <strong>30 000 сом</strong>. Чистая прибыль: <strong>10 000 сом</strong>.</p>
+              <p class="mt-3 text-slate-700">Потенциал по Чуйской области — пример: 500 участков → прибыль ~ <strong>500 000 сом</strong>.</p>
+              <ul class="mt-3 list-disc pl-5 text-slate-700">
+                <li>Аренда домика с пчёлами: 2000 сом/месяц</li>
+                <li>Продажа матки пчёл: 1000 сом/шт.</li>
+              </ul>
+            </div>
+            <div class="bg-white p-4 rounded-lg border shadow-sm">
+              <h4 class="font-semibold">Статья затрат (пример)</h4>
+              <ul class="text-slate-700 mt-2 list-disc pl-5">
+                <li>Древесина ~3 000 сом</li>
+                <li>Крепёж ~120 сом</li>
+                <li>Трубочки ~760 сом</li>
+                <li>Работа ~500–1 000 сом</li>
+                <li>Итог ~4 500 сом</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!-- Новая фотка на фоне -->
+        <img src="https://images.techinsider.ru/upload/img_cache/1d6/1d60cf11d8d7849c7cd3e7b127d03524_ce_620x413x3x0.jpg"
+          alt="Пчёлы на сотах"
+          style="position:absolute;left:0;bottom:0;width:200px;opacity:0.13;pointer-events:none;z-index:1;" />
+      </section>
+
+      <!-- Slide 6 — Биология -->
+      <section class="slide" data-index="5">
+        <div class="p-8 grid md:grid-cols-2 gap-6 items-center">
+          <div>
+            <h3 class="text-2xl font-bold mb-3">4. Биология и работа диких пчёл</h3>
+
+            <p class="text-slate-700">Радиус работы: <strong>200–300 м</strong>. Работают при низких температурах (+8…+10°C). Одиночные пчёлы нуждаются в трубочках, а не в ульях.</p>
+
+            <ul class="mt-3 list-disc pl-5 text-slate-700">
+              <li>Трубочки: 6–10 мм</li>
+              <li>Высота размещения: 1–2 м</li>
+              <li>Ориентация: юго-восток</li>
+              <li>Минимальный уход: проверка раз в сезон</li>
+            </ul>
+          </div>
+
+          <div class="flex flex-col items-center">
+            <!-- Фото цветущего сада -->
+            <img src="https://moya-planeta.ru/upload/images/l/eb/e2/ebe21cb5a55a808b104f3d51c3ff96284bae5182.jpg"
+              alt="Цветущий сад"
+              class="rounded-xl shadow-lg mb-4 w-full max-w-xs" style="object-fit:cover;">
+            <!-- Новая фотка -->
+            <img src="https://resizer.mail.ru/p/47f17987-b5df-5d5e-9caf-39ce5d9cba7b/AQAKsf6PDj50dkQhL6k75Edic7g-Bzc2OfclLwRMpzvc4XHHvl8KdEqjOVDmONLXNWAI8-OHK1Ia4fNCuYE9UOY8Dyc.jpg"
+              alt="Пчёлы крупно"
+              class="rounded-xl shadow mb-4 w-full max-w-xs" style="object-fit:cover;opacity:0.85;">
+          </div>
+          <!-- Фон слайда -->
+          <img src="https://images.techinsider.ru/upload/img_cache/1d6/1d60cf11d8d7849c7cd3e7b127d03524_ce_620x413x3x0.jpg"
+            alt="Пчёлы на сотах"
+            style="position:absolute;right:0;bottom:0;width:220px;opacity:0.10;pointer-events:none;z-index:1;" />
+        </div>
+      </section>
+
+      <!-- Slide 7 — Социальный эффект и релевантность -->
+      <section class="slide" data-index="6">
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-3">6. Социальный эффект</h3>
+          <ul class="list-disc pl-5 text-slate-700">
+            <li>Устойчивый доход для фермера</li>
+            <li>Восстановление популяций опылителей</li>
+            <li>Рост урожайности без химии</li>
+            <li>Экологичная модель бизнеса</li>
+            <li>Масштабируемость по регионам</li>
+          </ul>
+
+          <div class="mt-6 bg-amber-50 p-4 rounded-lg">
+            <h4 class="font-semibold">Релевантность для фестиваля</h4>
+            <p class="text-slate-700 mt-2">Креативная экосистема, зелёная экономика, создание малых стартапов, реальный кейс с бенефициаром.</p>
+          </div>
+        </div>
+        <!-- Новая фотка на фоне -->
+        <img src="https://resizer.mail.ru/p/47f17987-b5df-5d5e-9caf-39ce5d9cba7b/AQAKsf6PDj50dkQhL6k75Edic7g-Bzc2OfclLwRMpzvc4XHHvl8KdEqjOVDmONLXNWAI8-OHK1Ia4fNCuYE9UOY8Dyc.jpg"
+          alt="Пчёлы крупно"
+          style="position:absolute;left:0;top:0;width:180px;opacity:0.13;pointer-events:none;z-index:1;" />
+      </section>
+
+      <!-- Slide 8 — Цели проекта -->
+      <section class="slide" data-index="7">
+        <div class="p-8">
+          <h3 class="text-2xl font-bold mb-3">7. Цели проекта</h3>
+          <ul class="list-disc pl-5 text-slate-700 mb-4">
+            <li>Обеспечить фермеров Кыргызстана стабильным естественным опылением.</li>
+            <li>Повысить урожайность ягод и фруктов на 35–40% без химии.</li>
+            <li>Восстановить популяции диких опылителей.</li>
+            <li>Создать модель микро-бизнеса, которую можно масштабировать по всей стране.</li>
+          </ul>
+        </div>
+        <!-- Новая фотка на фоне -->
+        <img src="https://images.techinsider.ru/upload/img_cache/1d6/1d60cf11d8d7849c7cd3e7b127d03524_ce_620x413x3x0.jpg"
+          alt="Пчёлы на сотах"
+          style="position:absolute;right:0;bottom:0;width:180px;opacity:0.13;pointer-events:none;z-index:1;" />
+      </section>
+
+      <!-- Slide 9 — Контакты / Завершение -->
+      <section class="slide" data-index="8">
+        <div class="p-8 text-center">
+          <h3 class="text-3xl font-bold mb-4">Спасибо!</h3>
+          <p class="text-slate-700 mb-6">Готовы обсуждать пилотный запуск, обучение и помощь в производстве домиков.</p>
+
+          <div class="inline-block bg-gradient-to-r from-yellow-400 to-orange-400 text-white px-6 py-3 rounded-full font-semibold">Команда Кавказики — контакты</div>
+
+          <div class="mt-8 hex justify-center">
+            <div class="cell small floating"></div>
+            <div class="cell small"></div>
+            <div class="cell small floating"></div>
+          </div>
+        </div>
+        <!-- Новая фотка на фоне -->
+        <img src="https://resizer.mail.ru/p/47f17987-b5df-5d5e-9caf-39ce5d9cba7b/AQAKsf6PDj50dkQhL6k75Edic7g-Bzc2OfclLwRMpzvc4XHHvl8KdEqjOVDmONLXNWAI8-OHK1Ia4fNCuYE9UOY8Dyc.jpg"
+          alt="Пчёлы крупно"
+          style="position:absolute;left:0;bottom:0;width:180px;opacity:0.13;pointer-events:none;z-index:1;" />
+      </section>
+
+    </main>
+
+    <!-- footer controls for mobile -->
+    <footer class="mt-6 flex items-center justify-between text-sm text-slate-600">
+      <div>Use ← → keys or buttons to navigate. Автоплей можно включить.</div>
+    </footer>
+  </div>
+
+  <script>
+    // Simple slide system
+    // Simple slide system
+    const slides = document.querySelectorAll('.slide');
+    let idx = 0;
+    let autoplay = false;
+    let autoplayTimer = null;
+
+    function show(i){
+      slides.forEach(s=>s.classList.remove('active'));
+      slides[i].classList.add('active');
+      idx = i;
+    }
+
+    document.getElementById('next').addEventListener('click', ()=>{
+      show((idx+1)%slides.length);
+    });
+    document.getElementById('prev').addEventListener('click', ()=>{
+      show((idx-1+slides.length)%slides.length);
+    });
+
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'ArrowRight') document.getElementById('next').click();
+      if(e.key === 'ArrowLeft') document.getElementById('prev').click();
+    });
+
+    // start button
+    document.getElementById('btn-start').addEventListener('click', ()=> show(1));
+
+    // autoplay toggle
+    document.getElementById('btn-autoplay').addEventListener('click', (e)=>{
+      autoplay = !autoplay;
+      e.target.textContent = autoplay ? 'Остановить' : 'Автоплей';
+      if(autoplay){
+        autoplayTimer = setInterval(()=> document.getElementById('next').click(), 5000);
+      } else { clearInterval(autoplayTimer); }
+    });
+
+    // small demo: animate some hex cells randomly to pulse
+    function pulseRandom(){
+      const cells = document.querySelectorAll('.hex .cell');
+      const i = Math.floor(Math.random() * cells.length);
+      const c = cells[i];
+      if(!c) return;
+      c.animate([
+        { transform: 'scale(1) translateY(0)' },
+        { transform: 'scale(1.09) translateY(-8px)' },
+        { transform: 'scale(1) translateY(0)' }
+      ],{duration:800, easing:'ease', iterations:1});
+    }
+    setInterval(pulseRandom, 1600);
+
+    // Ensure first slide visible
+    show(0);
+  </script>
+</body>
+</html>

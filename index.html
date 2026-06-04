@@ -1,40 +1,60 @@
 <!doctype html>
 <html lang="ru">
+
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Aqua | Инвесторская презентация</title>
+  <title>Aqua | Early Stage</title>
   <style>
     :root {
-      --ink: #0c2733;
-      --muted: #5d7480;
-      --blue: #0788bd;
-      --blue-deep: #045a7a;
-      --cyan: #67d7ef;
-      --aqua: #dff8fb;
-      --leaf: #48a868;
-      --earth: #8b6a4e;
-      --paper: rgba(255, 255, 255, .86);
-      --line: rgba(7, 88, 120, .16);
-      --shadow: 0 18px 54px rgba(4, 90, 122, .18);
+      --ink: #071612;
+      --pine: #102a22;
+      --deep: #0b2019;
+      --water: #86c8d8;
+      --paper: #f1efe4;
+      --gold: #d8bd78;
+      --moss: #8fa17d;
+      --line: rgba(216, 189, 120, .22);
+      --shadow: 0 28px 70px rgba(3, 13, 10, .36);
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
+    html,
     body {
       margin: 0;
-      color: var(--ink);
-      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background:
-        radial-gradient(circle at 12% 8%, rgba(103, 215, 239, .34), transparent 28rem),
-        radial-gradient(circle at 86% 12%, rgba(72, 168, 104, .16), transparent 24rem),
-        linear-gradient(140deg, #f7fcff 0%, #e8f8fb 46%, #f7fbf8 100%);
+        radial-gradient(circle at 18% 10%, rgba(134, 200, 216, .2), transparent 30rem),
+        radial-gradient(circle at 88% 20%, rgba(143, 161, 125, .2), transparent 24rem),
+        linear-gradient(135deg, #06120f 0%, #0b2019 56%, #132a22 100%);
+      color: var(--paper);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+    }
+
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: -15%;
+      z-index: 0;
+      pointer-events: none;
+      background:
+        linear-gradient(115deg, transparent 0 42%, rgba(217, 241, 239, .06) 43% 44%, transparent 45% 100%),
+        repeating-linear-gradient(90deg, rgba(255, 255, 255, .024) 0 1px, transparent 1px 6px);
+      mix-blend-mode: screen;
+      animation: mist 24s ease-in-out infinite alternate;
+    }
+
+    body::after {
+      opacity: .5;
+      filter: blur(16px);
+      animation-duration: 36s;
+      animation-direction: alternate-reverse;
     }
 
     img {
@@ -43,76 +63,77 @@
     }
 
     .deck {
+      position: relative;
+      z-index: 1;
+      width: 100vw;
       height: 100dvh;
-      overflow-y: auto;
-      scroll-snap-type: y mandatory;
+      display: flex;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-behavior: smooth;
+      scrollbar-width: none;
+    }
+
+    .deck::-webkit-scrollbar {
+      display: none;
     }
 
     .slide {
+      width: 100vw;
       height: 100dvh;
+      flex: 0 0 100vw;
       scroll-snap-align: start;
       display: grid;
       place-items: center;
-      padding: clamp(10px, 2vw, 24px);
+      padding: clamp(14px, 3vw, 34px);
       position: relative;
       overflow: hidden;
     }
 
-    .slide::before,
-    .slide::after {
-      content: "";
-      position: absolute;
-      pointer-events: none;
-    }
-
     .slide::before {
-      inset: 0;
-      background-image:
-        linear-gradient(rgba(7, 136, 189, .06) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(7, 136, 189, .05) 1px, transparent 1px);
-      background-size: 38px 38px;
-      mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 82%, transparent);
-    }
-
-    .slide::after {
-      left: -8vw;
-      right: -8vw;
-      bottom: -13vh;
-      height: 28vh;
-      background:
-        radial-gradient(70% 80% at 50% 0%, rgba(103, 215, 239, .42), transparent 68%),
-        repeating-radial-gradient(ellipse at 50% 0%, rgba(7, 136, 189, .16) 0 2px, transparent 2px 18px);
-      border-radius: 50% 50% 0 0;
+      content: attr(data-count);
+      position: absolute;
+      right: clamp(16px, 4vw, 52px);
+      top: clamp(12px, 3vw, 34px);
+      color: rgba(241, 239, 228, .13);
+      font: 800 clamp(4rem, 14vw, 12rem) / .75 Georgia, serif;
+      z-index: 0;
     }
 
     .canvas {
       width: min(1180px, 100%);
-      height: calc(100dvh - clamp(20px, 4vw, 48px));
+      height: min(760px, calc(100dvh - clamp(28px, 6vw, 68px)));
+      min-height: 620px;
       display: grid;
       grid-template-rows: auto minmax(0, 1fr) auto;
-      gap: clamp(10px, 1.6vw, 20px);
-      padding: clamp(14px, 2.4vw, 28px);
-      border: 1px solid rgba(255, 255, 255, .92);
-      border-radius: 8px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, .9), rgba(255, 255, 255, .72)),
-        radial-gradient(circle at 80% 0%, rgba(103, 215, 239, .22), transparent 22rem);
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(18px);
+      gap: clamp(12px, 2vw, 22px);
+      padding: clamp(18px, 3vw, 36px);
       position: relative;
-      z-index: 1;
       overflow: hidden;
+      isolation: isolate;
+      background: rgba(16, 42, 34, .84);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      animation: pageIn .75s cubic-bezier(.2, .75, .18, 1) both;
     }
 
-    .canvas::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 10px;
-      background: linear-gradient(90deg, var(--blue-deep), var(--cyan), var(--leaf));
-      opacity: .78;
+    .canvas.light {
+      color: var(--pine);
+      background: rgba(241, 239, 228, .95);
+      border-color: rgba(16, 42, 34, .16);
+    }
+
+    .canvas.photo {
+      background:
+        linear-gradient(180deg, rgba(7, 22, 18, .16), rgba(7, 22, 18, .86)),
+        url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1800&q=85") center / cover;
+    }
+
+    .canvas.water {
+      background:
+        linear-gradient(180deg, rgba(7, 22, 18, .18), rgba(7, 22, 18, .82)),
+        url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1800&q=85") center / cover;
     }
 
     header,
@@ -122,11 +143,11 @@
     .grid,
     .cards,
     .steps,
-    .charts,
+    .metric-row,
     .timeline,
+    .two-col,
     .impact-grid,
-    .ask-grid,
-    .budget-grid {
+    .ask-grid {
       display: grid;
       gap: clamp(10px, 1.4vw, 16px);
     }
@@ -134,58 +155,55 @@
     header {
       grid-template-columns: auto 1fr auto;
       align-items: center;
-      min-height: 44px;
       position: relative;
       z-index: 2;
     }
 
     .brand {
-      grid-template-columns: 40px auto;
+      grid-template-columns: 42px auto;
       align-items: center;
-      gap: 10px;
       min-width: 0;
     }
 
     .brand img {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       object-fit: cover;
-      border: 1px solid var(--line);
-      border-radius: 8px;
+      border: 1px solid rgba(241, 239, 228, .22);
+      border-radius: 6px;
+      background: rgba(241, 239, 228, .9);
     }
 
     .brand strong {
       display: block;
+      color: currentColor;
       font-size: 14px;
-      letter-spacing: .09em;
+      letter-spacing: .14em;
       text-transform: uppercase;
     }
 
     .brand span,
-    .kicker,
-    footer,
-    .note,
-    .mini {
-      color: var(--muted);
+    footer {
+      color: currentColor;
+      opacity: .68;
+      font-size: 12px;
     }
 
-    .brand span,
-    footer,
-    .mini {
-      font-size: 12px;
+    .stage,
+    .kicker,
+    .badge {
+      color: var(--gold);
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .16em;
+      text-transform: uppercase;
     }
 
     .stage {
       justify-self: center;
       padding: 7px 11px;
-      border: 1px solid rgba(7, 136, 189, .22);
-      border-radius: 999px;
-      background: rgba(103, 215, 239, .13);
-      color: var(--blue-deep);
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: .12em;
-      text-transform: uppercase;
+      border: 1px solid currentColor;
+      background: rgba(216, 189, 120, .08);
       white-space: nowrap;
     }
 
@@ -194,15 +212,41 @@
       gap: 8px;
     }
 
-    .nav-btn {
-      width: 34px;
-      height: 34px;
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: white;
-      color: var(--blue-deep);
-      font-size: 18px;
+    .nav-btn,
+    .autoplay-btn {
+      min-width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(241, 239, 228, .25);
+      border-radius: 0;
+      background: rgba(241, 239, 228, .08);
+      color: currentColor;
+      font: inherit;
+      font-size: 14px;
       cursor: pointer;
+      transition: transform .25s ease, background .25s ease;
+    }
+
+    .autoplay-btn {
+      padding: 0 12px;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      font-size: 11px;
+      font-weight: 800;
+    }
+
+    .light .nav-btn,
+    .light .autoplay-btn {
+      border-color: rgba(16, 42, 34, .18);
+      background: rgba(16, 42, 34, .04);
+    }
+
+    .nav-btn:hover,
+    .autoplay-btn:hover,
+    .autoplay-btn.active {
+      transform: translateY(-2px);
+      background: rgba(216, 189, 120, .18);
     }
 
     main {
@@ -219,30 +263,41 @@
     h3,
     p {
       margin: 0;
+      font-weight: 600;
+    }
+
+    h1,
+    h2,
+    .money,
+    .big-number {
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+      letter-spacing: 0;
+      text-transform: uppercase;
     }
 
     h1 {
-      font-size: clamp(46px, 7.3vw, 88px);
-      line-height: .92;
-      letter-spacing: 0;
+      font-size: clamp(4.2rem, 13vw, 11rem);
+      line-height: .76;
+      margin: 40px;
     }
 
     h2 {
-      max-width: 14ch;
-      font-size: clamp(28px, 4.4vw, 54px);
-      line-height: 1;
-      letter-spacing: 0;
+      max-width: 22ch;
+      margin: 40px 0;
+      font-size: clamp(2.1rem, 4.6vw, 4.9rem);
+      line-height: .9;
     }
 
     h3 {
-      font-size: clamp(16px, 1.65vw, 22px);
-      line-height: 1.14;
+      font-size: clamp(16px, 1.55vw, 21px);
+      line-height: 1.13;
     }
 
     p,
     li {
-      font-size: clamp(14px, 1.25vw, 18px);
-      line-height: 1.34;
+      font-size: clamp(13px, 1.08vw, 16px);
+      line-height: 1.36;
     }
 
     ul {
@@ -250,366 +305,98 @@
       padding-left: 18px;
     }
 
-    li + li {
+    li+li {
       margin-top: 6px;
     }
 
-    .kicker {
-      margin-bottom: 10px;
-      font-size: 12px;
-      font-weight: 850;
-      letter-spacing: .16em;
-      text-transform: uppercase;
-    }
-
     .lead {
-      max-width: 710px;
+      max-width: 740px;
       margin-top: 16px;
-      color: #27434f;
-      font-size: clamp(18px, 1.9vw, 27px);
-      line-height: 1.23;
+      color: currentColor;
+      opacity: .8;
+      font-size: clamp(17px, 1.55vw, 23px);
+      line-height: 1.22;
     }
 
     .grid {
-      grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr);
+      grid-template-columns: minmax(0, .98fr) minmax(290px, .78fr);
       align-items: center;
     }
 
-    .hero {
-      grid-template-columns: minmax(0, 1fr) minmax(270px, .72fr);
+    .hero-side {
+      display: grid;
+      gap: 16px;
+      align-content: center;
+    }
+
+    .team-photo {
+      min-height: 250px;
+      position: relative;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      overflow: hidden;
+      border: 9px dashed rgba(241, 239, 228, .28);
+      background: rgba(7, 22, 18, .34);
+      backdrop-filter: blur(4px);
+    }
+
+    .team-photo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .team-photo img:not([src]),
+    .team-photo img[src=""] {
+      display: none;
+    }
+
+    .photo-hint {
+      position: relative;
+      z-index: 1;
+      max-width: 270px;
+      display: grid;
+      gap: 8px;
+      color: var(--paper);
+    }
+
+    .photo-hint strong {
+      font-family: Georgia, serif;
+      font-size: 1.45rem;
+      font-weight: 400;
+      text-transform: uppercase;
     }
 
     .logo-hero {
-      justify-self: center;
-      width: min(360px, 34vw);
-      aspect-ratio: 1;
+      min-height: 210px;
       display: grid;
       place-items: center;
       position: relative;
+      border: 9px solid rgba(216, 189, 120, .18);
+      background: rgba(241, 239, 228, .1);
+      overflow: hidden;
     }
 
     .logo-hero::before {
       content: "";
       position: absolute;
-      inset: 5%;
+      width: 70%;
+      aspect-ratio: 1;
       border-radius: 50%;
-      background: conic-gradient(from 210deg, rgba(103, 215, 239, .56), rgba(72, 168, 104, .24), rgba(4, 90, 122, .36), rgba(103, 215, 239, .56));
-      filter: blur(18px);
+      border: 1px solid rgba(134, 200, 216, .42);
+      background: conic-gradient(from 220deg, rgba(134, 200, 216, .36), rgba(143, 161, 125, .22), rgba(216, 189, 120, .2), rgba(134, 200, 216, .36));
+      filter: blur(5px);
+      animation: rotateWater 18s linear infinite;
     }
 
     .logo-hero img {
+      width: min(190px, 56%);
       position: relative;
-      border-radius: 8px;
-      filter: drop-shadow(0 22px 26px rgba(12, 39, 51, .16));
-    }
-
-    .metric-row {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 12px;
-      margin-top: 18px;
-    }
-
-    .metric,
-    .card,
-    .step,
-    .timeline-item,
-    .impact,
-    .ask,
-    .chart-card,
-    .budget-card {
-      border: 1px solid var(--line);
-      border-radius: 8px;
-      background: var(--paper);
-      padding: clamp(12px, 1.6vw, 19px);
-    }
-
-    .metric {
-      min-height: 122px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .metric::after,
-    .card::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      height: 5px;
-      background: linear-gradient(90deg, var(--blue), var(--cyan));
-      opacity: .7;
-    }
-
-    .metric strong {
-      display: block;
-      color: var(--blue-deep);
-      font-size: clamp(32px, 4.4vw, 48px);
-      line-height: .95;
-    }
-
-    .metric span,
-    .card span,
-    .step span,
-    .timeline-item span,
-    .impact span,
-    .ask span,
-    .chart-card span,
-    .budget-card span {
-      color: var(--muted);
-      font-size: 12px;
-      line-height: 1.28;
-    }
-
-    .cards {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
-    .card {
-      min-height: 136px;
-      display: grid;
-      gap: 9px;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .icon {
-      width: 36px;
-      height: 36px;
-      display: grid;
-      place-items: center;
-      border-radius: 8px;
-      color: white;
-      background: linear-gradient(135deg, var(--blue-deep), var(--cyan));
-      font-size: 15px;
-      font-weight: 900;
-    }
-
-    .steps {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      margin-top: 18px;
-    }
-
-    .step {
-      min-height: 174px;
-      display: grid;
-      align-content: start;
-      gap: 10px;
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, .88), rgba(223, 248, 251, .58));
-    }
-
-    .step b {
-      width: 30px;
-      height: 30px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      color: white;
-      background: var(--blue-deep);
-    }
-
-    .charts {
-      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
-      align-items: stretch;
-      margin-top: 16px;
-    }
-
-    .chart-card {
-      display: grid;
-      gap: 10px;
-      align-content: start;
-      min-height: 190px;
-    }
-
-    .bar-chart {
-      display: grid;
-      gap: 9px;
-    }
-
-    .bar-row {
-      display: grid;
-      grid-template-columns: 96px 1fr 42px;
-      align-items: center;
-      gap: 10px;
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .bar {
-      height: 13px;
-      border-radius: 999px;
-      background: rgba(7, 136, 189, .12);
-      overflow: hidden;
-    }
-
-    .bar i {
-      display: block;
-      width: var(--w);
-      height: 100%;
-      border-radius: inherit;
-      background: linear-gradient(90deg, var(--blue-deep), var(--cyan));
-    }
-
-    .donut-wrap {
-      display: grid;
-      grid-template-columns: 132px 1fr;
-      gap: 16px;
-      align-items: center;
-    }
-
-    .donut {
-      width: 132px;
-      aspect-ratio: 1;
-      border-radius: 50%;
-      background: conic-gradient(var(--blue-deep) 0 46%, var(--cyan) 46% 68%, var(--leaf) 68% 84%, var(--earth) 84% 100%);
-      display: grid;
-      place-items: center;
-      box-shadow: inset 0 0 0 1px rgba(4, 90, 122, .12);
-    }
-
-    .donut::after {
-      content: "70k";
-      width: 70px;
-      height: 70px;
-      display: grid;
-      place-items: center;
-      border-radius: 50%;
-      background: white;
-      color: var(--blue-deep);
-      font-weight: 900;
-      font-size: 24px;
-    }
-
-    .legend {
-      display: grid;
-      gap: 7px;
-    }
-
-    .legend div {
-      display: grid;
-      grid-template-columns: 12px 1fr auto;
-      gap: 8px;
-      align-items: center;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .swatch {
-      width: 12px;
-      height: 12px;
-      border-radius: 3px;
-      background: var(--c);
-    }
-
-    .comparison {
-      width: 100%;
-      border-collapse: collapse;
-      overflow: hidden;
-      border-radius: 8px;
-      background: white;
-      box-shadow: 0 0 0 1px var(--line);
-    }
-
-    .comparison th,
-    .comparison td {
-      padding: 12px 13px;
-      border-bottom: 1px solid var(--line);
-      text-align: left;
-      vertical-align: top;
-      font-size: clamp(12px, 1.05vw, 15px);
-      line-height: 1.28;
-    }
-
-    .comparison th {
-      color: var(--blue-deep);
-      background: rgba(103, 215, 239, .16);
-      font-size: 11px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
-
-    .comparison tr:last-child td {
-      border-bottom: 0;
-    }
-
-    .budget-grid {
-      grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
-      align-items: center;
-    }
-
-    .budget-card {
-      display: grid;
-      gap: 12px;
-    }
-
-    .money {
-      color: var(--blue-deep);
-      font-size: clamp(42px, 5.8vw, 76px);
-      font-weight: 900;
-      line-height: .9;
-    }
-
-    .timeline {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      align-items: stretch;
-      margin-top: 18px;
-      position: relative;
-    }
-
-    .timeline::before {
-      content: "";
-      position: absolute;
-      left: 10%;
-      right: 10%;
-      top: 42px;
-      height: 4px;
-      border-radius: 999px;
-      background: linear-gradient(90deg, var(--blue-deep), var(--cyan), var(--leaf));
-      opacity: .55;
-    }
-
-    .timeline-item {
-      min-height: 174px;
-      display: grid;
-      gap: 8px;
-      align-content: start;
-      position: relative;
-      padding-top: 56px;
-    }
-
-    .date-pill {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      padding: 8px 12px;
-      border-radius: 999px;
-      color: white;
-      background: linear-gradient(135deg, var(--blue-deep), var(--blue));
-      font-size: 13px;
-      font-weight: 850;
-      box-shadow: 0 8px 18px rgba(7, 136, 189, .24);
-    }
-
-    .impact-grid,
-    .ask-grid {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      margin-top: 18px;
-    }
-
-    .impact,
-    .ask {
-      display: grid;
-      gap: 9px;
-      align-content: start;
-    }
-
-    .big-number {
-      color: var(--blue-deep);
-      font-size: clamp(42px, 6vw, 78px);
-      font-weight: 900;
-      line-height: .82;
+      border-radius: 6px;
+      filter: drop-shadow(0 24px 30px rgba(3, 13, 10, .28));
     }
 
     .badge-list {
@@ -621,12 +408,143 @@
 
     .badge {
       padding: 8px 11px;
-      border: 1px solid rgba(7, 136, 189, .24);
-      border-radius: 999px;
-      background: rgba(255, 255, 255, .76);
-      color: var(--blue-deep);
-      font-size: 12px;
-      font-weight: 800;
+      border: 1px solid rgba(216, 189, 120, .28);
+      background: rgba(241, 239, 228, .07);
+      color: currentColor;
+      opacity: .88;
+      letter-spacing: .08em;
+    }
+
+    .metric-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .steps {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 22px;
+    }
+
+    .two-col {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      align-items: stretch;
+      margin-top: 22px;
+    }
+
+    .impact-grid,
+    .ask-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 22px;
+    }
+
+    .timeline {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 22px;
+      position: relative;
+    }
+
+    .metric,
+    .card,
+    .step,
+    .timeline-item,
+    .impact,
+    .ask,
+    .panel {
+      border: 1px solid rgba(216, 189, 120, .18);
+      background: rgba(241, 239, 228, .08);
+      padding: clamp(13px, 1.5vw, 19px);
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      gap: 10px;
+      align-content: start;
+      transition: transform .35s ease, border-color .35s ease, background .35s ease;
+    }
+
+    .light .metric,
+    .light .card,
+    .light .step,
+    .light .timeline-item,
+    .light .impact,
+    .light .ask,
+    .light .panel {
+      background: rgba(16, 42, 34, .055);
+      border-color: rgba(16, 42, 34, .12);
+    }
+
+    .metric:hover,
+    .card:hover,
+    .step:hover,
+    .timeline-item:hover,
+    .impact:hover,
+    .ask:hover,
+    .panel:hover {
+      transform: translateY(-6px);
+      border-color: rgba(216, 189, 120, .42);
+      background: rgba(241, 239, 228, .12);
+    }
+
+    .metric {
+      min-height: 156px;
+      max-width: 320px;
+    }
+
+    .card {
+      min-height: 132px;
+    }
+
+    .step {
+      min-height: 172px;
+    }
+
+    .panel {
+      min-height: 230px;
+    }
+
+    .impact,
+    .ask,
+    .timeline-item {
+      min-height: 175px;
+    }
+
+    .metric strong,
+    .money,
+    .big-number {
+      color: var(--gold);
+      line-height: .82;
+    }
+
+    .metric strong {
+      font-family: Georgia, serif;
+      font-size: clamp(32px, 4.8vw, 60px);
+      font-weight: 400;
+    }
+
+    .money {
+      font-size: clamp(2.2rem, 4.6vw, 5rem);
+    }
+
+    .big-number {
+      font-size: clamp(2.8rem, 7vw, 5.7rem);
+    }
+
+    .icon,
+    .step b {
+      width: 36px;
+      height: 36px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      color: var(--ink);
+      background: linear-gradient(135deg, var(--water), var(--gold));
+      font-size: 13px;
+      font-weight: 900;
     }
 
     footer {
@@ -637,10 +555,9 @@
     }
 
     .progress {
-      width: min(190px, 36vw);
+      width: min(210px, 36vw);
       height: 5px;
-      border-radius: 999px;
-      background: rgba(12, 39, 51, .12);
+      background: rgba(241, 239, 228, .16);
       overflow: hidden;
     }
 
@@ -648,33 +565,125 @@
       display: block;
       width: var(--value);
       height: 100%;
-      background: linear-gradient(90deg, var(--blue-deep), var(--cyan), var(--leaf));
+      background: linear-gradient(90deg, var(--water), var(--gold), var(--moss));
+      animation: fillBar 1.2s .2s both;
+    }
+
+    .drop {
+      position: fixed;
+      z-index: 2;
+      top: -12vh;
+      width: 12px;
+      height: 22px;
+      border-radius: 60% 60% 60% 0;
+      background: linear-gradient(135deg, rgba(217, 241, 239, .62), rgba(134, 200, 216, .2));
+      transform: rotate(-45deg);
+      opacity: .3;
+      pointer-events: none;
+      animation: rainDrop linear infinite;
+    }
+
+    .drop:nth-child(1) {
+      left: 8%;
+      animation-duration: 18s;
+      animation-delay: -4s;
+    }
+
+    .drop:nth-child(2) {
+      left: 27%;
+      animation-duration: 24s;
+      animation-delay: -14s;
+    }
+
+    .drop:nth-child(3) {
+      left: 51%;
+      animation-duration: 20s;
+      animation-delay: -9s;
+    }
+
+    .drop:nth-child(4) {
+      left: 74%;
+      animation-duration: 26s;
+      animation-delay: -18s;
+    }
+
+    .drop:nth-child(5) {
+      left: 91%;
+      animation-duration: 22s;
+      animation-delay: -7s;
+    }
+
+    @keyframes pageIn {
+      from {
+        opacity: 0;
+        transform: translateX(24px) scale(.985);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+      }
+    }
+
+    @keyframes mist {
+      from {
+        transform: translateX(-3%) translateY(-1%);
+      }
+
+      to {
+        transform: translateX(3%) translateY(1%);
+      }
+    }
+
+    @keyframes rotateWater {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fillBar {
+      from {
+        clip-path: inset(0 100% 0 0);
+      }
+
+      to {
+        clip-path: inset(0 0 0 0);
+      }
+    }
+
+    @keyframes rainDrop {
+      0% {
+        transform: translate3d(0, -10vh, 0) rotate(-45deg);
+        opacity: 0;
+      }
+
+      12% {
+        opacity: .3;
+      }
+
+      100% {
+        transform: translate3d(70px, 120vh, 0) rotate(-45deg);
+        opacity: 0;
+      }
     }
 
     @media (max-height: 760px) and (min-width: 861px) {
       .canvas {
-        gap: 9px;
-        padding: 14px 22px;
+        min-height: 0;
+        gap: 10px;
+        padding: 16px 24px;
       }
 
       h1 {
-        font-size: clamp(44px, 6.8vw, 76px);
+        font-size: clamp(4rem, 11vw, 9rem);
       }
 
       h2 {
-        font-size: clamp(26px, 3.7vw, 44px);
+        font-size: clamp(1.9rem, 3.8vw, 4rem);
       }
 
       .lead {
-        font-size: clamp(17px, 1.55vw, 22px);
-        margin-top: 12px;
-      }
-
-      .metric-row,
-      .steps,
-      .timeline,
-      .impact-grid,
-      .ask-grid {
+        font-size: clamp(16px, 1.35vw, 20px);
         margin-top: 12px;
       }
 
@@ -684,35 +693,40 @@
       .timeline-item,
       .impact,
       .ask,
-      .chart-card,
-      .budget-card {
+      .panel {
         padding: 11px 13px;
-      }
-
-      .card,
-      .metric {
-        min-height: 112px;
-      }
-
-      .step,
-      .timeline-item {
-        min-height: 148px;
+        min-height: auto;
       }
 
       p,
       li {
-        font-size: 13px;
+        font-size: 12.5px;
+      }
+
+      .team-photo {
+        min-height: 200px;
+      }
+
+      .logo-hero {
+        min-height: 175px;
       }
     }
 
     @media (max-width: 860px) {
+      body {
+        overflow: auto;
+      }
+
       .deck {
         height: auto;
-        overflow: visible;
+        overflow-x: hidden;
+        overflow-y: visible;
+        display: block;
         scroll-snap-type: none;
       }
 
       .slide {
+        width: 100%;
         height: auto;
         min-height: 100dvh;
         padding: 12px;
@@ -738,382 +752,508 @@
       }
 
       .grid,
-      .hero,
       .metric-row,
       .cards,
       .steps,
-      .charts,
       .timeline,
+      .two-col,
       .impact-grid,
-      .ask-grid,
-      .budget-grid {
+      .ask-grid {
         grid-template-columns: 1fr;
       }
 
       h2 {
         max-width: 100%;
       }
-
-      .logo-hero {
-        width: min(280px, 74vw);
-      }
-
-      .timeline::before {
-        display: none;
-      }
-
-      .comparison {
-        display: block;
-        overflow-x: auto;
-      }
-
-      .donut-wrap {
-        grid-template-columns: 112px 1fr;
-      }
-
-      .donut {
-        width: 112px;
-      }
     }
 
-    @media print {
-      body {
-        background: white;
-      }
+    @media (prefers-reduced-motion: reduce) {
 
-      .deck {
-        height: auto;
-        overflow: visible;
-      }
-
-      .slide {
-        height: 100vh;
-        page-break-after: always;
-      }
-
-      .canvas {
-        height: calc(100vh - 32px);
-        box-shadow: none;
-      }
-
-      .slide-nav {
-        display: none;
+      *,
+      *::before,
+      *::after {
+        animation-duration: .001ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
       }
     }
   </style>
 </head>
+
 <body>
+  <i class="drop"></i>
+  <i class="drop"></i>
+  <i class="drop"></i>
+  <i class="drop"></i>
+  <i class="drop"></i>
+
   <div class="deck" id="deck">
-    <section class="slide" id="slide-1">
-      <div class="canvas">
+    <section class="slide" id="slide-1" data-count="01">
+      <div class="canvas photo">
         <header>
-          <div class="brand"><img src="logo.png" alt="Aqua logo"><div><strong>Aqua</strong><span>smart water reuse</span></div></div>
-          <div class="stage">Инвесторская презентация</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev aria-label="Предыдущий слайд">&lsaquo;</button><button class="nav-btn" data-next aria-label="Следующий слайд">&rsaquo;</button></div>
+          <div class="brand"><img src="logo.png" alt="Aqua logo">
+            <div><strong>Aqua</strong><span>Early Stage</span></div>
+          </div>
+          <div class="stage">Название проекта</div>
+          <div class="slide-nav"><button class="nav-btn" data-prev
+              aria-label="Предыдущий слайд">&lsaquo;</button><button class="nav-btn" data-next
+              aria-label="Следующий слайд">&rsaquo;</button><button class="autoplay-btn" data-autoplay>Автоплей</button>
+          </div>
         </header>
-        <main class="grid hero">
+        <main class="grid">
           <div>
-            <div class="kicker">Умная система сбора дождевой воды</div>
+            <div class="kicker">Умная система сбора и автоматического использования воды</div>
             <h1>Aqua</h1>
-            <p class="lead">Сбор, фильтрация и автоматический полив на базе датчиков, погодных данных и Machine Learning для домов, ферм, теплиц и городских зеленых зон.</p>
+            <p class="lead">Снижение потерь воды с помощью AI и автоматизированного полива.</p>
             <div class="badge-list">
-              <span class="badge">Kyrgyzstan climate-tech</span>
+              <span class="badge">Early Stage</span>
               <span class="badge">AI irrigation</span>
               <span class="badge">water reuse</span>
             </div>
           </div>
-          <div class="logo-hero"><img src="logo.png" alt="Схема продукта Aqua"></div>
+          <div class="hero-side">
+            <div class="team-photo">
+              <img src="team-photo.jpg" alt="Фото команды Aqua" onerror="this.remove()">
+              <div class="photo-hint">
+                <strong>Знакомство с командой</strong>
+                <span>Место для фото и короткого представления команды. Файл: <b>team-photo.jpg</b>.</span>
+              </div>
+            </div>
+            <div class="logo-hero"><img src="logo.png" alt="Aqua"></div>
+          </div>
         </main>
-        <footer><span>01 / 10</span><div class="progress"><span style="--value:10%"></span></div></footer>
+        <footer><span>01 / 10</span>
+          <div class="progress"><span style="--value:10%"></span></div>
+        </footer>
       </div>
     </section>
 
-    <section class="slide" id="slide-2">
-      <div class="canvas">
+    <section class="slide" id="slide-2" data-count="02">
+      <div class="canvas light">
         <header>
-          <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>problem</span></div></div>
-          <div class="stage">Тема 1: проблема</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
+          <div class="brand"><img src="logo.png" alt="">
+            <div><strong>Aqua</strong><span>problem</span></div>
+          </div>
+          <div class="stage">Проблема</div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn"
+              data-next>&rsaquo;</button><button class="autoplay-btn" data-autoplay>Автоплей</button></div>
         </header>
         <main>
-          <div class="kicker">Вода теряется до того, как приносит пользу</div>
-          <h2>Кыргызстану нужна точная модель управления водой</h2>
+          <div class="kicker">Дефицит воды усиливается</div>
+          <h2>Кыргызстан теряет слишком много поливной воды</h2>
           <div class="metric-row">
-            <div class="metric"><strong>40%</strong><span>поливной воды теряется при транспортировке из-за изношенной ирригационной инфраструктуры</span></div>
-            <div class="metric"><strong>2+ млрд</strong><span>кубометров утечек в год по оценке проблемы водопотерь</span></div>
-            <div class="metric"><strong>25%+</strong><span>потерь пресной воды от общего объема водозабора</span></div>
-          </div>
-          <div class="charts">
-            <div class="chart-card">
-              <h3>Где теряется вода</h3>
-              <div class="bar-chart">
-                <div class="bar-row"><span>Транспорт</span><div class="bar"><i style="--w:40%"></i></div><b>40%</b></div>
-                <div class="bar-row"><span>Ручной полив</span><div class="bar"><i style="--w:32%"></i></div><b>32%</b></div>
-                <div class="bar-row"><span>Дренаж</span><div class="bar"><i style="--w:28%"></i></div><b>28%</b></div>
-              </div>
-              <span>Иллюстративная структура проблемы для инвесторского объяснения.</span>
+            <div class="metric"><strong>40%</strong>
+              <p>Кыргызстан теряет до 40% поливной воды.</p>
             </div>
-            <div class="cards">
-              <div class="card"><div class="icon">!</div><h3>Полив часто остается ручным</h3><p>Решения принимаются по расписанию, без учета влажности почвы, погоды и состояния растений.</p></div>
-              <div class="card"><div class="icon">↓</div><h3>Дождевая вода уходит в дренаж</h3><p>Города и частный сектор почти не используют дождевую воду повторно, хотя она может снижать нагрузку на ресурсы.</p></div>
+            <div class="metric"><strong>2 млрд м³</strong>
+              <p>Потери превышают 2 млрд м³ в год.</p>
+            </div>
+            <div class="metric"><strong>без данных</strong>
+              <p>Полив часто выполняется без учета влажности почвы и погоды.</p>
+            </div>
+            <div class="metric"><strong>0 reuse</strong>
+              <p>Дождевая вода практически не используется повторно.</p>
+            </div>
+            <div class="metric"><strong>климат</strong>
+              <p>Изменение климата усиливает дефицит воды.</p>
             </div>
           </div>
         </main>
-        <footer><span>02 / 10</span><div class="progress"><span style="--value:20%"></span></div></footer>
+        <footer><span>02 / 10</span>
+          <div class="progress"><span style="--value:20%"></span></div>
+        </footer>
       </div>
     </section>
 
-    <section class="slide" id="slide-3">
-      <div class="canvas">
+    <section class="slide" id="slide-3" data-count="03">
+      <div class="canvas water">
         <header>
-          <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>solution</span></div></div>
-          <div class="stage">Тема 2: решение</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
+          <div class="brand"><img src="logo.png" alt="">
+            <div><strong>Aqua</strong><span>solution</span></div>
+          </div>
+          <div class="stage">Решение</div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn"
+              data-next>&rsaquo;</button><button class="autoplay-btn" data-autoplay>Автоплей</button></div>
         </header>
         <main class="grid">
           <div>
-            <div class="kicker">Что делает продукт</div>
-            <h2>Собирает воду и подает ее тогда, когда она нужна</h2>
-            <p class="lead">Aqua объединяет резервуар, фильтрацию, насос, контроллер, датчики влажности и ML-модель для оптимального полива.</p>
+            <div class="kicker">Умная система сбора, фильтрации и автоматического полива</div>
+            <h2>Система сама понимает, когда и сколько воды нужно</h2>
+            <p class="lead">Aqua соединяет воду, датчики, прогноз погоды и AI в единую систему точного полива.</p>
           </div>
           <div class="cards">
-            <div class="card"><div class="icon">1</div><h3>Сбор</h3><p>Дождевая вода, водопровод или скважина пополняют резервуар.</p></div>
-            <div class="card"><div class="icon">2</div><h3>Очистка</h3><p>Предфильтр и фильтрация убирают крупные загрязнения.</p></div>
-            <div class="card"><div class="icon">3</div><h3>Анализ</h3><p>Датчики и погодные данные оценивают потребность в поливе.</p></div>
-            <div class="card"><div class="icon">4</div><h3>Полив</h3><p>Система автоматически выбирает время и объем воды.</p></div>
+            <div class="card">
+              <div class="icon">1</div>
+              <h3>Сбор дождевой воды</h3>
+              <p>Система собирает воду для повторного использования.</p>
+            </div>
+            <div class="card">
+              <div class="icon">2</div>
+              <h3>Хранение и фильтрация</h3>
+              <p>Вода хранится в резервуаре и проходит очистку.</p>
+            </div>
+            <div class="card">
+              <div class="icon">3</div>
+              <h3>Датчики и погода</h3>
+              <p>Датчики влажности и прогноз показывают реальную потребность.</p>
+            </div>
+            <div class="card">
+              <div class="icon">AI</div>
+              <h3>AI для полива</h3>
+              <p>Алгоритм рассчитывает оптимальное время и объем полива.</p>
+            </div>
           </div>
         </main>
-        <footer><span>03 / 10</span><div class="progress"><span style="--value:30%"></span></div></footer>
+        <footer><span>03 / 10</span>
+          <div class="progress"><span style="--value:30%"></span></div>
+        </footer>
       </div>
     </section>
 
-    <section class="slide" id="slide-4">
+    <section class="slide" id="slide-4" data-count="04">
       <div class="canvas">
         <header>
-          <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>workflow</span></div></div>
-          <div class="stage">Тема 3: как работает</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
+          <div class="brand"><img src="logo.png" alt="">
+            <div><strong>Aqua</strong><span>workflow</span></div>
+          </div>
+          <div class="stage">Как работает система</div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn"
+              data-next>&rsaquo;</button><button class="autoplay-btn" data-autoplay>Автоплей</button></div>
         </header>
         <main>
-          <div class="kicker">Этапы работы системы</div>
-          <h2>От дождя до точного полива</h2>
+          <div class="kicker">От источника воды до точного полива</div>
+          <h2>Четыре шага работы Aqua</h2>
           <div class="steps">
-            <div class="step"><b>1</b><h3>Сбор воды</h3><p>Система использует дождевую воду и может подключаться к водопроводу или скважине.</p></div>
-            <div class="step"><b>2</b><h3>Хранение</h3><p>Вода очищается от крупных загрязнений и сохраняется в подземном резервуаре.</p></div>
-            <div class="step"><b>3</b><h3>Фильтрация</h3><p>Фильтры доводят воду до качества, пригодного для полива.</p></div>
-            <div class="step"><b>4</b><h3>ML-полив</h3><p>Модель учитывает влажность, погоду и историю участка, оптимизируя расход.</p></div>
-          </div>
-          <div class="charts">
-            <div class="chart-card">
-              <h3>Цикл данных</h3>
-              <div class="bar-chart">
-                <div class="bar-row"><span>Датчики</span><div class="bar"><i style="--w:78%"></i></div><b>live</b></div>
-                <div class="bar-row"><span>Погода</span><div class="bar"><i style="--w:64%"></i></div><b>API</b></div>
-                <div class="bar-row"><span>ML</span><div class="bar"><i style="--w:86%"></i></div><b>opt</b></div>
-              </div>
+            <div class="step"><b>1</b>
+              <h3>Сбор воды</h3>
+              <p>Дождь, водопровод или скважина пополняют систему.</p>
             </div>
-            <div class="chart-card">
-              <h3>Результат</h3>
-              <p>Экономия воды, снижение затрат на полив, здоровье растений, стабильный рост и вклад в устойчивое будущее.</p>
+            <div class="step"><b>2</b>
+              <h3>Хранение</h3>
+              <p>Вода сохраняется в резервуаре для дальнейшего использования.</p>
+            </div>
+            <div class="step"><b>3</b>
+              <h3>Фильтрация</h3>
+              <p>Фильтры очищают воду перед подачей на полив.</p>
+            </div>
+            <div class="step"><b>4</b>
+              <h3>AI-полив</h3>
+              <p>Автоматический полив запускается на основе AI-анализа.</p>
             </div>
           </div>
         </main>
-        <footer><span>04 / 10</span><div class="progress"><span style="--value:40%"></span></div></footer>
+        <footer><span>04 / 10</span>
+          <div class="progress"><span style="--value:40%"></span></div>
+        </footer>
       </div>
     </section>
 
-    <section class="slide" id="slide-5">
-      <div class="canvas">
+    <section class="slide" id="slide-5" data-count="05">
+      <div class="canvas light">
         <header>
-          <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>advantage</span></div></div>
-          <div class="stage">Тема 4: конкуренты</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
+          <div class="brand"><img src="logo.png" alt="">
+            <div><strong>Aqua</strong><span>advantages</span></div>
+          </div>
+          <div class="stage">Конкурентные преимущества</div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn"
+              data-next>&rsaquo;</button><button class="autoplay-btn" data-autoplay>Автоплей</button></div>
         </header>
         <main>
-          <div class="kicker">Почему не просто таймер или бак</div>
-          <h2>Преимущество в адаптации к реальным условиям</h2>
-          <table class="comparison">
-            <thead><tr><th>Альтернатива</th><th>Ограничение</th><th>Преимущество Aqua</th></tr></thead>
-            <tbody>
-              <tr><td>Ручной полив</td><td>Зависит от человека и часто расходует лишнюю воду.</td><td>Автоматизация и точная подача нужного объема.</td></tr>
-              <tr><td>Полив по таймеру</td><td>Работает по расписанию, не видит погоду и влажность.</td><td>Учитывает датчики, прогноз и состояние почвы.</td></tr>
-              <tr><td>Зарубежные smart-системы</td><td>Дороже и хуже адаптируются к локальному рынку.</td><td>Локальная настройка, доступность и обучение ML на местных данных.</td></tr>
-              <tr><td>Обычный резервуар</td><td>Только хранит воду.</td><td>Пополняет, фильтрует, анализирует и управляет поливом.</td></tr>
-            </tbody>
-          </table>
+          <div class="kicker">Чем Aqua отличается от альтернатив</div>
+          <h2>Больше, чем бак или таймер</h2>
+          <div class="cards">
+            <div class="card">
+              <div class="icon">R</div>
+              <h3>В отличие от ручного полива</h3>
+              <p>Автоматизация и экономия воды.</p>
+            </div>
+            <div class="card">
+              <div class="icon">T</div>
+              <h3>В отличие от таймеров</h3>
+              <p>Учет влажности почвы и погоды.</p>
+            </div>
+            <div class="card">
+              <div class="icon">L</div>
+              <h3>В отличие от зарубежных систем</h3>
+              <p>Локальная адаптация под рынок Кыргызстана.</p>
+            </div>
+            <div class="card">
+              <div class="icon">W</div>
+              <h3>В отличие от резервуаров</h3>
+              <p>Автоматическое восполнение воды и управление поливом.</p>
+            </div>
+          </div>
         </main>
-        <footer><span>05 / 10</span><div class="progress"><span style="--value:50%"></span></div></footer>
+        <footer><span>05 / 10</span>
+          <div class="progress"><span style="--value:50%"></span></div>
+        </footer>
       </div>
     </section>
 
-    <section class="slide" id="slide-6">
+    <section class="slide" id="slide-6" data-count="06">
       <div class="canvas">
         <header>
-          <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>business</span></div></div>
-          <div class="stage">Тема 5: бизнес-модель</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
+          <div class="brand"><img src="logo.png" alt="">
+            <div><strong>Aqua</strong><span>business model</span></div>
+          </div>
+          <div class="stage">Клиенты и бизнес-модель</div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn"
+              data-next>&rsaquo;</button><button class="autoplay-btn" data-autoplay>Автоплей</button></div>
         </header>
-        <main class="budget-grid">
-          <div>
-            <div class="kicker">Коммерческая логика</div>
-            <h2>Комплект, установка, сервис и ПО</h2>
-            <p class="lead">Базовая unit-экономика: ориентир стоимости комплекта около 70 000 сом с потенциалом повторной выручки через обслуживание и программные функции.</p>
-            <div class="badge-list">
-              <span class="badge">B2B: теплицы, фермы, агрокомплексы</span>
-              <span class="badge">B2C: дома, дачи, сады</span>
-            </div>
+        <main class="two-col">
+          <div class="panel">
+            <div class="kicker">Клиенты</div>
+            <h2>Кому нужен продукт</h2>
+            <ul>
+              <li><b>B2B:</b> фермы, теплицы, агрокомплексы.</li>
+              <li><b>B2C:</b> частные дома, дачи, сады.</li>
+            </ul>
           </div>
-          <div class="budget-card">
+          <div class="panel">
+            <div class="kicker">Unit-экономика</div>
             <div class="money">70 000 сом</div>
-            <h3>Куда идут деньги в одном комплекте</h3>
-            <div class="donut-wrap">
-              <div class="donut" aria-label="Диаграмма структуры затрат"></div>
-              <div class="legend">
-                <div><i class="swatch" style="--c:var(--blue-deep)"></i><span>Оборудование и резервуар</span><b>46%</b></div>
-                <div><i class="swatch" style="--c:var(--cyan)"></i><span>Установка и логистика</span><b>22%</b></div>
-                <div><i class="swatch" style="--c:var(--leaf)"></i><span>ПО, датчики и ML</span><b>16%</b></div>
-                <div><i class="swatch" style="--c:var(--earth)"></i><span>Сервис и маркетинг</span><b>16%</b></div>
-              </div>
-            </div>
-            <span>Проценты можно уточнить после первых пилотов и коммерческих предложений поставщиков.</span>
+            <ul>
+              <li><b>Цена:</b> 70 000 сом.</li>
+              <li><b>Себестоимость:</b> 40 000 сом.</li>
+              <li><b>Прибыль с установки:</b> 13 800 сом.</li>
+            </ul>
           </div>
         </main>
-        <footer><span>06 / 10</span><div class="progress"><span style="--value:60%"></span></div></footer>
+        <footer><span>06 / 10</span>
+          <div class="progress"><span style="--value:60%"></span></div>
+        </footer>
       </div>
     </section>
 
-    <section class="slide" id="slide-7">
-      <div class="canvas">
+    <section class="slide" id="slide-7" data-count="07">
+      <div class="canvas light">
         <header>
-          <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>traction</span></div></div>
-          <div class="stage">Тема 6: прогресс</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
+          <div class="brand"><img src="logo.png" alt="">
+            <div><strong>Aqua</strong><span>progress</span></div>
+          </div>
+          <div class="stage">Текущий прогресс</div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn"
+              data-next>&rsaquo;</button><button class="autoplay-btn" data-autoplay>Автоплей</button></div>
         </header>
         <main>
           <div class="kicker">Что уже сделано</div>
-          <h2>Команда проверяет проблему и готовит MVP</h2>
-          <div class="cards">
-            <div class="card"><div class="icon">✓</div><h3>Исследование проблемы</h3><p>Изучены водопотери, ручной полив и потребность в автоматизации.</p></div>
-            <div class="card"><div class="icon">?</div><h3>Анализ рынка</h3><p>Проведены опросы фермеров и анализ существующих решений.</p></div>
-            <div class="card"><div class="icon">+</div><h3>Первые бенефициары</h3><p>Определены хозяйства и организации, которым система может дать быстрый эффект.</p></div>
-            <div class="card"><div class="icon">AI</div><h3>AI-составляющая</h3><p>Модель учится на испарении влаги, прогнозе погоды и данных конкретной теплицы или участка.</p></div>
+          <h2>Команда проверяет проблему и рынок</h2>
+          <div class="metric-row">
+            <div class="metric"><strong>01</strong>
+              <p>Проведено исследование проблемы.</p>
+            </div>
+            <div class="metric"><strong>02</strong>
+              <p>Выполнен анализ рынка.</p>
+            </div>
+            <div class="metric"><strong>03</strong>
+              <p>Опросены фермеры.</p>
+            </div>
+            <div class="metric"><strong>04</strong>
+              <p>Найдены первые бенефициары.</p>
+            </div>
+            <div class="metric"><strong>05</strong>
+              <p>Изучены существующие решения.</p>
+            </div>
           </div>
         </main>
-        <footer><span>07 / 10</span><div class="progress"><span style="--value:70%"></span></div></footer>
+        <footer><span>07 / 10</span>
+          <div class="progress"><span style="--value:70%"></span></div>
+        </footer>
       </div>
     </section>
 
-    <section class="slide" id="slide-8">
+    <section class="slide" id="slide-8" data-count="08">
       <div class="canvas">
         <header>
-          <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>impact</span></div></div>
-          <div class="stage">Тема 7: эффект</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
+          <div class="brand"><img src="logo.png" alt="">
+            <div><strong>Aqua</strong><span>partners and team</span></div>
+          </div>
+          <div class="stage">Партнеры и команда</div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn"
+              data-next>&rsaquo;</button><button class="autoplay-btn" data-autoplay>Автоплей</button></div>
+        </header>
+        <main class="two-col">
+          <div class="panel">
+            <div class="kicker">Партнеры</div>
+            <h2>Кого подключаем</h2>
+            <ul>
+              <li>Фермерские хозяйства.</li>
+              <li>Тепличные комплексы.</li>
+              <li>Экологические организации.</li>
+              <li>Муниципальные структуры.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="kicker">Команда</div>
+            <h2>Почему мы сможем</h2>
+            <ul>
+              <li>Готовность развивать проект.</li>
+              <li>Работа с экспертами.</li>
+              <li>Внедрение современных технологий.</li>
+            </ul>
+          </div>
+        </main>
+        <footer><span>08 / 10</span>
+          <div class="progress"><span style="--value:80%"></span></div>
+        </footer>
+      </div>
+    </section>
+
+    <section class="slide" id="slide-9" data-count="09">
+      <div class="canvas light">
+        <header>
+          <div class="brand"><img src="logo.png" alt="">
+            <div><strong>Aqua</strong><span>impact</span></div>
+          </div>
+          <div class="stage">Эффект проекта</div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn"
+              data-next>&rsaquo;</button><button class="autoplay-btn" data-autoplay>Автоплей</button></div>
         </header>
         <main>
-          <div class="kicker">ESG и цели устойчивого развития</div>
-          <h2>Экологический, социальный и экономический эффект</h2>
+          <div class="kicker">Экология, общество, экономика</div>
+          <h2>Проект дает измеримый эффект</h2>
           <div class="impact-grid">
-            <div class="impact"><div class="big-number">E</div><h3>Экология</h3><p>Снижение потерь воды, повторное использование дождевой воды и меньшая нагрузка на водоснабжение.</p></div>
-            <div class="impact"><div class="big-number">S</div><h3>Социальный эффект</h3><p>Упрощение ухода за растениями и повышение доступности smart-технологий для хозяйств.</p></div>
-            <div class="impact"><div class="big-number">G</div><h3>Экономика</h3><p>Снижение расходов на воду и полив, автоматизация процессов для домов и агробизнеса.</p></div>
-          </div>
-          <div class="charts">
-            <div class="chart-card">
-              <h3>Ожидаемый эффект</h3>
-              <div class="bar-chart">
-                <div class="bar-row"><span>Вода</span><div class="bar"><i style="--w:72%"></i></div><b>-30%</b></div>
-                <div class="bar-row"><span>Ручной труд</span><div class="bar"><i style="--w:82%"></i></div><b>-50%</b></div>
-                <div class="bar-row"><span>Стабильность</span><div class="bar"><i style="--w:68%"></i></div><b>+25%</b></div>
-              </div>
+            <div class="impact">
+              <div class="big-number">E</div>
+              <h3>Экологический</h3>
+              <p>Сокращение потерь воды. Повторное использование ресурсов.</p>
             </div>
-            <div class="badge-list">
-              <span class="badge">SDG 6: Clean Water</span>
-              <span class="badge">SDG 12: Responsible Consumption</span>
-              <span class="badge">SDG 13: Climate Action</span>
+            <div class="impact">
+              <div class="big-number">S</div>
+              <h3>Социальный</h3>
+              <p>Упрощение ухода за растениями. Доступность smart-технологий.</p>
+            </div>
+            <div class="impact">
+              <div class="big-number">₽</div>
+              <h3>Экономический</h3>
+              <p>Снижение расходов на воду и полив.</p>
             </div>
           </div>
         </main>
-        <footer><span>08 / 10</span><div class="progress"><span style="--value:80%"></span></div></footer>
+        <footer><span>09 / 10</span>
+          <div class="progress"><span style="--value:90%"></span></div>
+        </footer>
       </div>
     </section>
 
-    <section class="slide" id="slide-9">
-      <div class="canvas">
+    <section class="slide" id="slide-10" data-count="10">
+      <div class="canvas water">
         <header>
-          <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>roadmap</span></div></div>
-          <div class="stage">Тема 8: roadmap</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
-        </header>
-        <main>
-          <div class="kicker">Цели на 12 месяцев</div>
-          <h2>От MVP к региональному масштабированию</h2>
-          <div class="timeline">
-            <div class="timeline-item"><span class="date-pill">Июль 2026</span><h3>Запуск MVP</h3><p>Первые пилотные пользователи, сбор обратной связи и проверка установки.</p></div>
-            <div class="timeline-item"><span class="date-pill">Август 2026</span><h3>Полный запуск ML</h3><p>Подключение 50+ пользователей и поиск пилотных регионов.</p></div>
-            <div class="timeline-item"><span class="date-pill">Апрель 2027</span><h3>Масштабирование</h3><p>Выход на все области и расширение базы данных для ML-модели.</p></div>
+          <div class="brand"><img src="logo.png" alt="">
+            <div><strong>Aqua</strong><span>plans and ask</span></div>
           </div>
-          <div class="charts">
-            <div class="chart-card">
-              <h3>План подключений</h3>
-              <div class="bar-chart">
-                <div class="bar-row"><span>Июль</span><div class="bar"><i style="--w:18%"></i></div><b>MVP</b></div>
-                <div class="bar-row"><span>Август</span><div class="bar"><i style="--w:52%"></i></div><b>50+</b></div>
-                <div class="bar-row"><span>Апрель</span><div class="bar"><i style="--w:100%"></i></div><b>регионы</b></div>
-              </div>
-            </div>
-            <div class="chart-card">
-              <h3>Преодоленные вызовы</h3>
-              <p>Недоверие фермеров к новым технологиям, адаптация идеи под местный рынок и поиск подходящей бизнес-модели.</p>
-            </div>
+          <div class="stage">Планы и запрос</div>
+          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn"
+              data-next>&rsaquo;</button><button class="autoplay-btn" data-autoplay>Автоплей</button></div>
+        </header>
+        <main class="two-col">
+          <div class="panel">
+            <div class="kicker">На ближайшие 12 месяцев</div>
+            <h2>Планы</h2>
+            <ul>
+              <li>Запуск MVP.</li>
+              <li>Подключение первых пользователей.</li>
+              <li>Масштабирование по Кыргызстану.</li>
+            </ul>
+          </div>
+          <div class="panel">
+            <div class="kicker">Нам необходимо</div>
+            <h2>Запрос</h2>
+            <ul>
+              <li>Менторство.</li>
+              <li>Экспертная поддержка.</li>
+              <li>Партнерства.</li>
+              <li>Пилотные площадки для тестирования.</li>
+            </ul>
           </div>
         </main>
-        <footer><span>09 / 10</span><div class="progress"><span style="--value:90%"></span></div></footer>
-      </div>
-    </section>
-
-    <section class="slide" id="slide-10">
-      <div class="canvas">
-        <header>
-          <div class="brand"><img src="logo.png" alt=""><div><strong>Aqua</strong><span>ask</span></div></div>
-          <div class="stage">Тема 9: что нужно сейчас</div>
-          <div class="slide-nav"><button class="nav-btn" data-prev>&lsaquo;</button><button class="nav-btn" data-next>&rsaquo;</button></div>
-        </header>
-        <main>
-          <div class="kicker">Запрос к инвесторам и партнерам</div>
-          <h2>Нам нужны экспертиза, пилоты и партнерства</h2>
-          <div class="ask-grid">
-            <div class="ask"><div class="icon">M</div><h3>Менторство</h3><p>Экспертная поддержка в инженерии, агросекторе, продажах и MVP-тестировании.</p></div>
-            <div class="ask"><div class="icon">P</div><h3>Партнерства</h3><p>Связи с агросектором, тепличными комплексами, eco-tech компаниями и муниципалитетами.</p></div>
-            <div class="ask"><div class="icon">→</div><h3>Пилотное внедрение</h3><p>Площадки для тестов, обратная связь от пользователей и подготовка к масштабированию.</p></div>
-          </div>
-          <p class="lead">Aqua готова развивать устойчивое управление водой в Кыргызстане: от локальной установки до обучаемой платформы точного полива.</p>
-        </main>
-        <footer><span>10 / 10</span><div class="progress"><span style="--value:100%"></span></div></footer>
+        <footer><span>10 / 10</span>
+          <div class="progress"><span style="--value:100%"></span></div>
+        </footer>
       </div>
     </section>
   </div>
 
   <script>
+    const deck = document.getElementById('deck');
     const slides = [...document.querySelectorAll('.slide')];
-    const go = (direction) => {
-      const current = slides.reduce((best, slide, index) => {
-        const distance = Math.abs(slide.getBoundingClientRect().top);
-        return distance < best.distance ? { index, distance } : best;
-      }, { index: 0, distance: Infinity }).index;
-      const next = Math.min(slides.length - 1, Math.max(0, current + direction));
-      slides[next].scrollIntoView({ behavior: 'smooth' });
-    };
+    const autoplayButtons = [...document.querySelectorAll('[data-autoplay]')];
+    let currentIndex = 0;
+    let autoplayTimer = null;
+
+    function updateCurrentIndex() {
+      currentIndex = Math.round(deck.scrollLeft / window.innerWidth);
+    }
+
+    function showSlide(index) {
+      currentIndex = Math.max(0, Math.min(slides.length - 1, index));
+      slides[currentIndex].scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'nearest' });
+    }
+
+    function go(direction) {
+      updateCurrentIndex();
+      showSlide(currentIndex + direction);
+    }
+
+    function setAutoplay(active) {
+      autoplayButtons.forEach((button) => {
+        button.classList.toggle('active', active);
+        button.textContent = active ? 'Стоп' : 'Автоплей';
+      });
+
+      if (autoplayTimer) {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+
+      if (active) {
+        autoplayTimer = setInterval(() => {
+          updateCurrentIndex();
+          showSlide(currentIndex >= slides.length - 1 ? 0 : currentIndex + 1);
+        }, 5500);
+      }
+    }
 
     document.addEventListener('click', (event) => {
-      if (event.target.matches('[data-next]')) go(1);
-      if (event.target.matches('[data-prev]')) go(-1);
+      if (event.target.matches('[data-next]')) {
+        setAutoplay(false);
+        go(1);
+      }
+
+      if (event.target.matches('[data-prev]')) {
+        setAutoplay(false);
+        go(-1);
+      }
+
+      if (event.target.matches('[data-autoplay]')) {
+        setAutoplay(!autoplayTimer);
+      }
     });
 
     document.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowDown' || event.key === 'ArrowRight' || event.key === ' ') go(1);
-      if (event.key === 'ArrowUp' || event.key === 'ArrowLeft') go(-1);
+      if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
+        event.preventDefault();
+        setAutoplay(false);
+        go(1);
+      }
+
+      if (event.key === 'ArrowLeft' || event.key === 'PageUp') {
+        event.preventDefault();
+        setAutoplay(false);
+        go(-1);
+      }
+
+      if (event.key.toLowerCase() === 'a') {
+        setAutoplay(!autoplayTimer);
+      }
     });
+
+    deck.addEventListener('scroll', () => {
+      window.requestAnimationFrame(updateCurrentIndex);
+    });
+
+    window.addEventListener('resize', () => showSlide(currentIndex));
   </script>
 </body>
+
 </html>
